@@ -11,20 +11,16 @@ class GuzzleUtil
     protected $client;
     protected $api_key;
 
-    public function __construct(Client $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = new Client(['base_uri' => 'http://newsapi.org/v2/']);
         $this->api_key = config('app.news_api_key');
     }
 
-    public function setBaseUrl($baseUrl)
-    {
-        $this->client->setDefaultOption('base_uri',$baseUrl);
-    }
 
     public function getRequest($url)
     {
-        $response = $this->client->request('GET', $url."&apiKey=".$this->api_key);
+        $response = $this->client->request('GET', $url);
         return json_decode($response->getBody());
     }
 

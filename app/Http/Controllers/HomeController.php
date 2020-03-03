@@ -27,8 +27,8 @@ class HomeController extends Controller
     public function index(GuzzleUtil $guzzleUtil)
     {
 
-        $guzzleUtil->setBaseUrl('http://newsapi.org/v2/');
-//        dd($guzzleUtil->getRequest('top-headlines?country=us'));
+        $response = $guzzleUtil->getRequest('sources?apiKey=21376581dce440f1b991ef81aadea207');
+        dd($response);
         return view('home');
     }
 }
