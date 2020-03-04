@@ -28,8 +28,8 @@ class HomeController extends Controller
     public function index(GuzzleUtil $guzzleUtil)
     {
 
-        $response = $guzzleUtil->getRequest(NewsEndpoints::$SOURCES);
-        dd($response);
-        return view('home');
+        $response = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=gr");
+        $articles = $response->articles;
+        return view('home',compact('articles'));
     }
 }

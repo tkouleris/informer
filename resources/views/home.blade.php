@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    @foreach($articles as $article)
+                            <p><a href="{{ $article->url }}">{{ $article->title }}</a></p>
+                    @endforeach
                 </div>
             </div>
         </div>
