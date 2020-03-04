@@ -14,7 +14,6 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         //
-        GuzzleException
     ];
 
     /**
