@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Utils\GuzzleUtil;
+use App\Utils\NewsEndpoints;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class HomeController extends Controller
     public function index(GuzzleUtil $guzzleUtil)
     {
 
-        $response = $guzzleUtil->getRequest('sources?apiKey=21376581dce440f1b991ef81aadea207');
+        $response = $guzzleUtil->getRequest(NewsEndpoints::$SOURCES);
         dd($response);
         return view('home');
     }

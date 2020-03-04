@@ -18,9 +18,14 @@ class GuzzleUtil
     }
 
 
-    public function getRequest($url)
+    public function getRequest($url, $options = null)
     {
-        $response = $this->client->request('GET', $url);
+        $full_url = $url."?apiKey=".$this->api_key;
+        if($options != null)
+        {
+            $full_url .= "&".$options;
+        }
+        $response = $this->client->request('GET', $full_url);
         return json_decode($response->getBody());
     }
 
