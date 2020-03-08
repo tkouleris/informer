@@ -15,7 +15,18 @@
                     @endif
 
                     @foreach($articles as $article)
-                            <p><a href="{{ $article->url }}">{{ $article->title }}</a></p>
+                            <div style="margin-bottom: 10px;border-bottom: 1px dotted black;">
+                                <p style="color: #000000">
+                                    <b>{{ $article->source->name }}</b> - {{\Carbon\Carbon::parse($article->publishedAt)->diffForHumans() }}
+                                </p>
+                                @if($article->urlToImage != null)
+                                    <img width="100%" height="75%" src="{{ $article->urlToImage }}" />
+                                @else
+                                    <img width="100%" height="350px;" src="/img/no_image_available.jpg" />
+                                @endif
+                                <a href="{{ $article->url }}"><h3>{{ $article->title }}</h3></a>
+                                <p style="color: #000000">{{ $article->description }}</p>
+                            </div>
                     @endforeach
                 </div>
             </div>

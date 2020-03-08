@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Utils\GuzzleUtil;
 use App\Utils\NewsEndpoints;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
