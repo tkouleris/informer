@@ -26,8 +26,12 @@ class HomeController extends Controller
     public function index(GuzzleUtil $guzzleUtil)
     {
 
-        $response = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=gr");
-        $articles = $response->articles;
+        $responseGR = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=gr");
+        $responseUS = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=us");
+
+        $articles_array = array_merge($responseGR->articles, $responseUS->articles);
+        $articles = collect($articles_array);
+        $articles = $articles->sortByDesc('publishedAt');
         return view('home',compact('articles'));
     }
 }
