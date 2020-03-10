@@ -186,6 +186,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Informer Application Service Providers
+         */
+        App\Providers\EloquentServiceProvider::class,
+
     ],
 
     /*
