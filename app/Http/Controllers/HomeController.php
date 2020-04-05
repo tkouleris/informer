@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Interfaces\ISettingRepository;
 use App\Utils\GuzzleUtil;
 use App\Utils\NewsEndpoints;
 
@@ -21,10 +22,16 @@ class HomeController extends Controller
      * Show the application dashboard.
      *
      * @param GuzzleUtil $guzzleUtil
+     * @param ISettingRepository $settingRepository
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(GuzzleUtil $guzzleUtil)
     {
+        /*
+         *  TODO - UserNewsService
+         * -----------------------------
+         * It will get the news according the user settings
+         */
 
         $responseGR = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=gr");
         $responseUS = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=us");

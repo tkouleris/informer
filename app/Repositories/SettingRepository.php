@@ -24,4 +24,11 @@ class SettingRepository implements ISettingRepository
     {
         return $this->model->create($data);
     }
+
+    public function find_active_by_user($UserID)
+    {
+        return $this->model::where('setting_active',true)
+            ->where('setting_userid',$UserID)
+            ->get();
+    }
 }
