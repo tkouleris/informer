@@ -25,4 +25,9 @@ class CategoryRepository implements ICategoryRepository
     {
         return $this->model::where('CategoryID',$CategoryID)->first();
     }
+
+    public function all()
+    {
+        return $this->model::all();
+    }
 }

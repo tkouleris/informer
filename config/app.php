@@ -190,6 +190,7 @@ return [
          * Informer Application Service Providers
          */
         App\Providers\EloquentServiceProvider::class,
+        App\Providers\EloquentEventServiceProvider::class,
 
     ],
 

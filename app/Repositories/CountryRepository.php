@@ -29,4 +29,9 @@ class CountryRepository implements ICountryRepository
     {
         return $this->model::where('CountryID',$CountryID)->first();
     }
+
+    public function all()
+    {
+        return $this->model::all();
+    }
 }
