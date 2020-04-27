@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Interfaces\ISettingRepository;
+use App\Services\UserNewsService;
 use App\Utils\GuzzleUtil;
 use App\Utils\NewsEndpoints;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,24 +23,25 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param GuzzleUtil $guzzleUtil
-     * @param ISettingRepository $settingRepository
+     * @param UserNewsService $UserNewsService
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(GuzzleUtil $guzzleUtil)
+    public function index(UserNewsService $UserNewsService)
     {
-        /*
-         *  TODO - UserNewsService
-         * -----------------------------
-         * It will get the news according the user settings
-         */
+//        /*
+//         *  TODO - UserNewsService
+//         * -----------------------------
+//         * It will get the news according the user settings
+//         */
+//
+//        $responseGR = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=gr");
+//        $responseUS = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=us");
+//
+//        $articles_array = array_merge($responseGR->articles, $responseUS->articles);
+//        $articles = collect($articles_array);
+//        $articles = $articles->sortByDesc('publishedAt');
+        $articles = $UserNewsService->fetch(Auth::id());
 
-        $responseGR = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=gr");
-        $responseUS = $guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,"country=us");
-
-        $articles_array = array_merge($responseGR->articles, $responseUS->articles);
-        $articles = collect($articles_array);
-        $articles = $articles->sortByDesc('publishedAt');
         return view('home',compact('articles'));
     }
 }

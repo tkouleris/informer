@@ -28,6 +28,8 @@ class SettingRepository implements ISettingRepository
     public function find_active_by_user($UserID)
     {
         return $this->model::where('setting_active',true)
+            ->leftJoin('category','CategoryID','setting_categoryid')
+            ->leftJoin('country','CountryID','setting_countryid')
             ->where('setting_userid',$UserID)
             ->get();
     }
