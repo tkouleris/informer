@@ -19,11 +19,10 @@ class SettingsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(ICountryRepository $CountryRepository, ICategoryRepository $CategoryRepository)
+    public function settingsPage(ICountryRepository $CountryRepository, ICategoryRepository $CategoryRepository)
     {
-//        $SettingsCollection = $this->UserSettingsRepository->find_active_by_user(Auth::id());
-        $countries = $CountryRepository->all();
-        $categories = $CategoryRepository->all();
+
+
         return view('settings',compact('countries','categories'));
     }
 }
