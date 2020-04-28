@@ -10,9 +10,9 @@
                     </div>
 
                     <div class="card-body">
-                        <select class="browser-default custom-select">
+                        <select class="browser-default custom-select" name="setting_country_select">
                             @foreach($countries as $country)
-                                <option >{{ $country->CountryName }}</option>
+                                <option id="{{ $country->CountryID }}">{{ $country->CountryName }}</option>
                             @endforeach
                         </select>
                         @foreach($categories as $category)
