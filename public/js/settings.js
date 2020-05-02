@@ -1,3 +1,7 @@
+$( document ).ready(function() {
+    get_selected_categories_for_country(51);
+});
+
 $('[name=setting_country_select]').change(function(){
     var country_id = $(this).children(":selected").attr("id");
     get_selected_categories_for_country(country_id);
@@ -6,11 +10,7 @@ $('[name=setting_country_select]').change(function(){
 $('input:checkbox').change(function(){
     let country_id = $('[name=setting_country_select]').find(":selected").attr('id');
     let category_id = $(this).attr('id');
-    // let checked = $(this).is(':checked');
     set_selected_categories_for_country(country_id,category_id);
-    // if ($(this).is(':checked')) {
-    //     alert('checked '+category_id+'with countryid '+country_id + 'chcked: '+checked);
-    // }
 });
 
 

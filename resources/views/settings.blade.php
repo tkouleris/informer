@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <select class="browser-default custom-select" name="setting_country_select">
                             @foreach($settings->Countries as $country)
-                                <option id="{{ $country->CountryID }}">{{ $country->CountryName }}</option>
+                                <option id="{{ $country->CountryID }}" {{ ($country->CountryID == 51)?"selected":"" }}>{{ $country->CountryName }}</option>
                             @endforeach
                         </select>
                         @foreach($settings->Categories as $category)
