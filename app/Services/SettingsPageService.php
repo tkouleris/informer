@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\DTO\SettingsPageData;
 use App\Repositories\Interfaces\ICategoryRepository;
 use App\Repositories\Interfaces\ICountryRepository;
 
@@ -11,16 +12,19 @@ class SettingsPageService
 {
     protected $CountryRepository;
     protected $CategoryRepository;
+    protected $SettingsPageData;
 
-    public function __construct(ICountryRepository $CountryRepository, ICategoryRepository $CategoryRepository)
+    public function __construct(ICountryRepository $CountryRepository, ICategoryRepository $CategoryRepository,SettingsPageData $SettingsPageData)
     {
         $this->CountryRepository = $CountryRepository;
         $this->CategoryRepository = $CategoryRepository;
+        $this->SettingsPageData = $SettingsPageData;
     }
 
-    public function fetch()
+    public function fetch():SettingsPageData
     {
-        $countries = $this->CountryRepository->all();
-        $categories = $this->CategoryRepository->all();
+        $this->SettingsPageData->Countries = $this->CountryRepository->all();
+        $this->SettingsPageData->Categories = $this->CategoryRepository->all();
+        return $this->SettingsPageData;
     }
 }

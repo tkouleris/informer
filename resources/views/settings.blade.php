@@ -11,11 +11,11 @@
 
                     <div class="card-body">
                         <select class="browser-default custom-select" name="setting_country_select">
-                            @foreach($countries as $country)
+                            @foreach($settings->Countries as $country)
                                 <option id="{{ $country->CountryID }}">{{ $country->CountryName }}</option>
                             @endforeach
                         </select>
-                        @foreach($categories as $category)
+                        @foreach($settings->Categories as $category)
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="{{ $category->CategoryID }}">
                                 <label class="form-check-label" for="{{ $category->CategoryID }}" style="color: #000000;">
