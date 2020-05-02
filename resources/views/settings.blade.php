@@ -17,7 +17,11 @@
                         </select>
                         @foreach($settings->Categories as $category)
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="{{ $category->CategoryID }}">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="chbx_category_{{ $category->CategoryID }}"
+                                       id="{{ $category->CategoryID }}"
+                                >
                                 <label class="form-check-label" for="{{ $category->CategoryID }}" style="color: #000000;">
                                     {{ $category->CategoryName }}
                                 </label>

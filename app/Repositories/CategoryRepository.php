@@ -30,4 +30,5 @@ class CategoryRepository implements ICategoryRepository
     {
         return $this->model::all();
     }
+
 }

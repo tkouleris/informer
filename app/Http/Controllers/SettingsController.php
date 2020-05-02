@@ -24,7 +24,13 @@ class SettingsController extends Controller
 
     public function settingsPage(ICountryRepository $CountryRepository, ICategoryRepository $CategoryRepository)
     {
-        $settings = $this->SettingsPageService->fetch();
+        $settings = $this->SettingsPageService->fetch_all();
         return view('settings',compact('settings'));
+    }
+
+    public function country_categories($country_id)
+    {
+        $logged_in_user = Auth::id();
+        return $this->SettingsPageService->fetch_country_categories($country_id,$logged_in_user);
     }
 }

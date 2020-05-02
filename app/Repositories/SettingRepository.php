@@ -33,4 +33,11 @@ class SettingRepository implements ISettingRepository
             ->where('setting_userid',$UserID)
             ->get();
     }
+
+    public function find_by_countryID_and_userID($country_id, $user_id)
+    {
+        return $this->model::where('setting_countryid',$country_id)
+            ->where('setting_userid',$user_id)
+            ->get();
+    }
 }

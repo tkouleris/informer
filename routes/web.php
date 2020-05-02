@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/settings', 'SettingsController@settingsPage')->name('settings');
+Route::get('/settings/categories/{country_id}', 'SettingsController@country_categories')->name('country_categories');
