@@ -33,4 +33,14 @@ class SettingsController extends Controller
         $logged_in_user = Auth::id();
         return $this->SettingsPageService->fetch_country_categories($country_id,$logged_in_user);
     }
+
+    public function set_category_for_country(Request $request)
+    {
+        $country_id = $request->input('country_id');
+        $category_id  = $request->input('category_id');
+        $user_id = Auth::id();
+
+        $this->SettingsPageService->set_category_for_country($user_id,$country_id,$category_id);
+
+    }
 }

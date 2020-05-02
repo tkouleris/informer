@@ -40,4 +40,24 @@ class SettingRepository implements ISettingRepository
             ->where('setting_userid',$user_id)
             ->get();
     }
+
+    public function find_by_userID_countryID_categoryID($userid,$countryid,$categoryid)
+    {
+        return $this->model::where('setting_userid',$userid)
+            ->where('setting_countryid',$countryid)
+            ->where('setting_categoryid',$categoryid)
+            ->first();
+    }
+
+    public function update($data)
+    {
+        $setting_id = $data['setting_id'];
+        $setting = $this->model::findOrFail($setting_id);
+
+        if(isset($data['setting_active'])) $setting->setting_active = $data['setting_active'];
+        $setting->save();
+
+        $setting = $this->model::findOrFail($setting_id);
+        return $setting;
+    }
 }

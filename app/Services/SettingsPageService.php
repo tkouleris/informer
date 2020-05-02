@@ -40,4 +40,14 @@ class SettingsPageService
     {
         return $this->SettingRepository->find_by_countryID_and_userID($country_id,$logged_in_user);
     }
+
+    public function set_category_for_country($user_id, $country_id,$category_id)
+    {
+        $setting = $this->SettingRepository->find_by_userID_countryID_categoryID($user_id,$country_id,$category_id);
+        $data = [
+            'setting_id' => $setting->setting_id,
+            'setting_active' => ($setting->setting_active == true)?false:true
+        ];
+        $this->SettingRepository->update($data);
+    }
 }
