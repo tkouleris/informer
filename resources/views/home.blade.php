@@ -28,7 +28,7 @@
                                     @else
                                         <img width="100%" height="350px;" src="/img/no_image_available.jpg" />
                                     @endif
-                                    <a href="{{ $article->url }}"><h3>{{ $article->title }}</h3></a>
+                                    <a href="{{ $article->url }}" target="_blank"><h3>{{ $article->title }}</h3></a>
                                     <p style="color: #000000">{{ $article->description }}</p>
                                 </div>
                             @endforeach
