@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Interfaces\ISettingRepository;
 use App\Services\UserNewsService;
-use App\Utils\GuzzleUtil;
-use App\Utils\NewsEndpoints;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -23,12 +21,14 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param Request $request
      * @param UserNewsService $UserNewsService
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(UserNewsService $UserNewsService)
+    public function index(Request $request, UserNewsService $UserNewsService)
     {
-        $articles = $UserNewsService->fetch(Auth::id());
-        return view('home',compact('articles'));
+        $search_query = $request->input('search_query');
+        $articles = $UserNewsService->fetch(Auth::id(),$search_query);
+        return view('home',compact('articles','search_query'));
     }
 }

@@ -25,7 +25,7 @@ class UserNewsService
         $this->guzzleUtil = $guzzleUtil;
     }
 
-    public function fetch($UserID)
+    public function fetch($UserID, $search_query = "")
     {
         $SettingsCollection = $this->UserSettingsRepository->find_active_by_user($UserID);
 
@@ -34,6 +34,7 @@ class UserNewsService
             $options = "";
             $options .= "country=".$setting->CountryShortName;
             $options .= "&category=".$setting->CategoryShort;
+            if($search_query != "") $options .= "&q=".$search_query;
             $NewsApiResponse = $this->guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,$options);
             $this->articles_array = array_merge($this->articles_array, $NewsApiResponse->articles);
         }
