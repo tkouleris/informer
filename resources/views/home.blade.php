@@ -19,7 +19,7 @@
                     @endif
                     @if($articles->count() > 0)
                             @foreach($articles as $article)
-                                <div style="margin-bottom: 10px;border-bottom: 1px dotted black;">
+                                <div>
                                     <p style="color: #000000">
                                         <b>{{ $article->source->name }}</b> - {{\Carbon\Carbon::parse($article->publishedAt)->diffForHumans() }}
                                     </p>
@@ -30,6 +30,9 @@
                                     @endif
                                     <a href="{{ $article->url }}" target="_blank"  ><h3>{{ $article->title }}</h3></a>
                                     <p style="color: #000000">{{ $article->description }}</p>
+                                </div>
+                                <div style="margin-bottom: 10px;border-bottom: 1px dotted black;">
+                                    <span style="color: black;">category: </span><span style="color: black;font-weight: bold;">{{ $article->category }}</span>
                                 </div>
                             @endforeach
                     @else

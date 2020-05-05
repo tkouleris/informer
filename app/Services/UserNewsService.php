@@ -36,12 +36,21 @@ class UserNewsService
             $options .= "&category=".$setting->CategoryShort;
             if($search_query != "") $options .= "&q=".$search_query;
             $NewsApiResponse = $this->guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,$options);
-            $this->articles_array = array_merge($this->articles_array, $NewsApiResponse->articles);
+            $NewsArticles = $this->add_category($NewsApiResponse->articles,$setting->CategoryShort);
+            $this->articles_array = array_merge($this->articles_array, $NewsArticles);
         }
 
         $articles = collect($this->articles_array);
         $articles = $articles->sortByDesc('publishedAt');
 
+        return $articles;
+    }
+
+    private function add_category($articles, $category_short_description)
+    {
+        foreach ($articles as $item) {
+            $item->category = $category_short_description;
+        }
         return $articles;
     }
 }
