@@ -6,7 +6,7 @@ use App\Services\UserNewsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
+class NewsfeedController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -29,6 +29,6 @@ class HomeController extends Controller
     {
         $search_query = $request->input('search_query');
         $articles = $UserNewsService->fetch(Auth::id(),$search_query);
-        return view('home',compact('articles','search_query'));
+        return view('newsfeed',compact('articles','search_query'));
     }
 }
