@@ -9,7 +9,7 @@
                 <div class="card-body" style="color:black;">
                     <h5 class="card-title">Categories</h5>
                     @foreach($categories as $category)
-                        <a href="#" class="btn btn-primary">{{$category->CategoryShort}}</a>
+                        <a href="?category={{$category->CategoryShort}}" class="btn btn-primary">{{$category->CategoryShort}}</a>
                     @endforeach
                 </div>
             </div>
