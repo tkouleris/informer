@@ -50,4 +50,9 @@ class SettingsPageService
         ];
         $this->SettingRepository->update($data);
     }
+
+    public function fetch_active_categories($userid)
+    {
+        return $this->SettingRepository->find_active_by_user($userid);
+    }
 }

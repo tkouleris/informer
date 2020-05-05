@@ -60,4 +60,14 @@ class SettingRepository implements ISettingRepository
         $setting = $this->model::findOrFail($setting_id);
         return $setting;
     }
+
+    public function find_active_user_active_categories($userid)
+    {
+        return $this->model::select('CategoryShort')->leftJoin('category','CategoryID','setting_categoryid')
+            ->where('setting_userid',$userid)
+            ->where('setting_active',true)
+            ->groupBy('CategoryShort')
+            ->get();
+
+    }
 }

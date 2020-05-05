@@ -4,6 +4,16 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body" style="color:black;">
+                    <h5 class="card-title">Categories</h5>
+                    @foreach($categories as $category)
+                        <a href="#" class="btn btn-primary">{{$category->CategoryShort}}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
