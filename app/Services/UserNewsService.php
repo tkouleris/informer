@@ -25,7 +25,7 @@ class UserNewsService
         $this->guzzleUtil = $guzzleUtil;
     }
 
-    public function fetch($UserID, $search_query = "")
+    public function fetch($UserID, $search_query = "", $category_filter = null)
     {
         $SettingsCollection = $this->UserSettingsRepository->find_active_by_user($UserID);
 
@@ -43,8 +43,12 @@ class UserNewsService
         $articles = collect($this->articles_array);
         $articles = $articles->sortByDesc('publishedAt');
 
-        return $articles;
+        return $articles->filter(function ($article) use ($category_filter){
+            if($category_filter == null) return $article;
+            if( $category_filter == $article->category ) return $article;
+        });
     }
+
 
     private function add_category($articles, $category_short_description)
     {

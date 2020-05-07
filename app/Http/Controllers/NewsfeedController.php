@@ -31,7 +31,8 @@ class NewsfeedController extends Controller
     {
         $UserID = Auth::id();
         $search_query = $request->input('search_query');
-        $articles = $UserNewsService->fetch($UserID,$search_query);
+        $category_filter = $request->input('category');
+        $articles = $UserNewsService->fetch($UserID,$search_query,$category_filter);
         $categories = $SettingsPageService->fetch_active_categories($UserID);
         return view('newsfeed',compact('articles','categories','search_query'));
     }

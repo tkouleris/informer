@@ -8,8 +8,18 @@
             <div class="card">
                 <div class="card-body" style="color:black;">
                     <h5 class="card-title">Categories</h5>
+                    <div style="padding-bottom: 5px;">
+                        <a href="{{url()->current()}}" style="background-color: #2ca02c" class="btn btn-primary">
+                            <b>clear</b>
+                        </a>
+                    </div>
+                    <hr/>
                     @foreach($categories as $category)
-                        <a href="?category={{$category->CategoryShort}}" class="btn btn-primary">{{$category->CategoryShort}}</a>
+                        <div style="padding-bottom: 5px;">
+                            <a href="?category={{$category->CategoryShort}}" class="btn btn-primary">
+                                {{$category->CategoryShort}}
+                            </a>
+                        </div>
                     @endforeach
                 </div>
             </div>
