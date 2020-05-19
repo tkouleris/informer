@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ImageRequest;
+use App\Services\ImageService;
 use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
-    public function ImageUpload()
-    {
-        request()->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $UserID = Auth::id();
-        $imageName = "avatar.".request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images/'.$UserID), $imageName);
+    protected $ImageService;
 
-        return back()
-            ->with('success','You have successfully upload image.')
-            ->with('image',$imageName);
+    public function __construct(ImageService $ImageService)
+    {
+        $this->ImageService = $ImageService;
+    }
+
+    public function ImageUpload(ImageRequest $request)
+    {
+        $imageName = $this->ImageService->AvatarImageUpload($request, Auth::id());
+        return back();
     }
 }
