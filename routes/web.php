@@ -23,3 +23,5 @@ Route::get('/newsfeed', 'NewsfeedController@index')->name('newsfeed');
 Route::get('/settings', 'SettingsController@settingsPage')->name('settings');
 Route::get('/settings/categories/{country_id}', 'SettingsController@country_categories')->name('country_categories');
 Route::post('/settings/categories/set', 'SettingsController@set_category_for_country')->name('set_category_for_country');
+
+Route::post('image-upload', 'ImageController@ImageUpload')->name('image.upload');
