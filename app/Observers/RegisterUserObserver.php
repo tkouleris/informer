@@ -10,6 +10,7 @@ use App\Repositories\Interfaces\ICountryRepository;
 use App\Repositories\Interfaces\ISettingRepository;
 use App\User;
 use Exception;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 
 class RegisterUserObserver
@@ -56,5 +57,7 @@ class RegisterUserObserver
                 $this->settingRepository->create($insert_settings_data);
             }
         }
+        File::makeDirectory(public_path('images/').$registered_userid);
+        File::copy(public_path('img/no_image_available.jpg'),public_path('images/').$registered_userid.'/avatar.jpg');
     }
 }
