@@ -58,7 +58,7 @@
 
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <img class="rounded-circle z-depth-0 md-avatar size-1"
-                                         src="{{ URL::to('/').'/images/1/avatar.jpg' }}"
+                                         src="{{ URL::to('/').'/images/'. Auth::user()->id. '/avatar.jpg' }}"
                                     /> {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
