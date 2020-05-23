@@ -29,6 +29,9 @@
                         @endforeach
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                     </div>
+                    <div class="card-header">
+                        <h2 style="color: #000000;">Avatar</h2>
+                    </div>
                     <div class="card-body">
                         <form action="{{ route('image.upload') }}" method="POST" enctype="multipart/form-data">
                             @csrf

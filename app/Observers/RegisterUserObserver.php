@@ -58,6 +58,9 @@ class RegisterUserObserver
             }
         }
         File::makeDirectory(public_path('images/').$registered_userid);
-        File::copy(public_path('img/default_avatar.jpg'),public_path('images/').$registered_userid.'/avatar.jpg');
+        File::copy(
+            public_path('img/default_avatar.jpg')
+            ,public_path('images/').$registered_userid.'/avatar.jpg'
+        );
     }
 }
