@@ -2,32 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UserException;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UpdatePasswordController extends Controller
 {
+    protected $UserService;
+
+    /**
+     * UpdatePasswordController constructor.
+     * @param $UserService
+     */
+    public function __construct(UserService $UserService)
+    {
+        $this->UserService = $UserService;
+    }
+
+
     /**
      * Update the password for the user.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \App\Exceptions\UserException
      */
     public function update(Request $request)
     {
-        // Validate the new password length...
-        $new_password = $request->new_password;
-        $password_confirm = $request->password_confirm;
-
-        if($new_password !== $password_confirm)
-        {
+        try {
+            $this->UserService->update_password(Auth::id(), $request->new_password, $request->password_confirm);
+        } catch (UserException $e) {
             return back()->withErrors(['confirm_password'=>'Password not match']);
         }
-        $user = Auth::user();
-        $user->password = Hash::make($new_password);
-        $user->save();
-
         return back();
     }
 }
