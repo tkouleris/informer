@@ -25,3 +25,5 @@ Route::get('/settings/categories/{country_id}', 'SettingsController@country_cate
 Route::post('/settings/categories/set', 'SettingsController@set_category_for_country')->name('set_category_for_country');
 
 Route::post('image-upload', 'ImageController@ImageUpload')->name('image.upload');
+
+Route::post('/settings/update-password', 'UpdatePasswordController@update')->name('settings.update.password');
