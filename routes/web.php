@@ -17,13 +17,13 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
-Route::get('/newsfeed', 'NewsfeedController@index')->name('newsfeed');
-Route::get('/settings', 'SettingsController@settingsPage')->name('settings');
-Route::get('/settings/categories/{country_id}', 'SettingsController@country_categories')->name('country_categories');
-Route::post('/settings/categories/set', 'SettingsController@set_category_for_country')->name('set_category_for_country');
+Route::get('/newsfeed', 'NewsfeedController@index')->name('newsfeed')->middleware('verified');
+Route::get('/settings', 'SettingsController@settingsPage')->name('settings')->middleware('verified');
+Route::get('/settings/categories/{country_id}', 'SettingsController@country_categories')->name('country_categories')->middleware('verified');
+Route::post('/settings/categories/set', 'SettingsController@set_category_for_country')->name('set_category_for_country')->middleware('verified');
 
-Route::post('image-upload', 'ImageController@ImageUpload')->name('image.upload');
+Route::post('image-upload', 'ImageController@ImageUpload')->name('image.upload')->middleware('verified');
 
-Route::post('/settings/update-password', 'UpdatePasswordController@update')->name('settings.update.password');
+Route::post('/settings/update-password', 'UpdatePasswordController@update')->name('settings.update.password')->middleware('verified');
