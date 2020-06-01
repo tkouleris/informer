@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class NewsfeedController extends Controller
 {
+    protected $items_per_page = 5;
     /**
      * Create a new controller instance.
      *
@@ -34,6 +35,13 @@ class NewsfeedController extends Controller
         $category_filter = $request->input('category');
         $articles = $UserNewsService->fetch($UserID,$search_query,$category_filter);
         $categories = $SettingsPageService->fetch_active_categories($UserID);
-        return view('newsfeed',compact('articles','categories','search_query'));
+        $page = 1;
+        if( isset( $request->page ) )
+        {
+            $page = $request->page;
+        }
+        $total_pages = $articles->count()/$this->items_per_page;
+        $articles = $articles->forPage($page,$this->items_per_page);
+        return view('newsfeed',compact('articles','categories','search_query','total_pages'));
     }
 }

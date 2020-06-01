@@ -55,6 +55,11 @@
                                     <span style="color: black;">category: </span><span style="color: black;font-weight: bold;">{{ $article->category }}</span>
                                 </div>
                             @endforeach
+
+                            @for($page_number = 1; $page_number <= $total_pages; $page_number++)
+
+                                <a href="{{ route('newsfeed') }}?page={{ $page_number.'&category='.app('request')->input('category') }}">{{ $page_number }}</a>
+                            @endfor
                     @else
                             <div style="margin-bottom: 10px;border-bottom: 1px dotted black;">
                                 <p style="color: #000000">
