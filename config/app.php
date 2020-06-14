@@ -13,6 +13,19 @@ return [
     */
 
     'news_api_key' => env('NEWS_API_KEY',0),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Avatar Folder
+    |--------------------------------------------------------------------------
+    |
+    | This value is the avatar folder used by teh production and the testing
+    | environment.
+    |
+    */
+
+    'avatar_folder' => (env('APP_ENV') == 'testing')?'images/testing/':'images/',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

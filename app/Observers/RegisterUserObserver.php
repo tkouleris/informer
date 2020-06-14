@@ -57,10 +57,10 @@ class RegisterUserObserver
                 $this->settingRepository->create($insert_settings_data);
             }
         }
-        File::makeDirectory(public_path('images/').$registered_userid);
+        File::makeDirectory(public_path(config('app.avatar_folder')).$registered_userid);
         File::copy(
             public_path('img/default_avatar.jpg')
-            ,public_path('images/').$registered_userid.'/avatar.jpg'
+            ,public_path(config('app.avatar_folder')).$registered_userid.'/avatar.jpg'
         );
     }
 }
