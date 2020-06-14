@@ -39,7 +39,7 @@ class UploadImageTest extends TestCase
     {
         // given
         $stub = __DIR__.'/test_files/test_avatar.jpg';
-        $name = 'test_8x.jpg';
+        $name = 'test_8x.'.substr($stub, -3);;
         $path = sys_get_temp_dir().'/'.$name;
         copy($stub, $path);
         $file = new UploadedFile($path, $name, filesize($path), null, null, true);
