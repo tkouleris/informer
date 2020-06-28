@@ -57,8 +57,11 @@
                             @endforeach
 
                             @for($page_number = 1; $page_number <= $total_pages; $page_number++)
-
-                                <a href="{{ route('newsfeed') }}?page={{ $page_number.'&category='.app('request')->input('category') }}">{{ $page_number }}</a>
+                                @if($page == $page_number)
+                                        <span style="color: black;font-weight: bold;">{{ $page_number }}</span>
+                                @else
+                                    <a href="{{ route('newsfeed') }}?page={{ $page_number.'&category='.app('request')->input('category') }}">{{ $page_number }}</a>
+                                @endif
                             @endfor
                     @else
                             <div style="margin-bottom: 10px;border-bottom: 1px dotted black;">

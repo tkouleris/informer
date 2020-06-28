@@ -42,6 +42,6 @@ class NewsfeedController extends Controller
         }
         $total_pages = $articles->count()/$this->items_per_page;
         $articles = $articles->forPage($page,$this->items_per_page);
-        return view('newsfeed',compact('articles','categories','search_query','total_pages'));
+        return view('newsfeed',compact('articles','categories','search_query','total_pages','page'));
     }
 }
