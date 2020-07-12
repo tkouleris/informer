@@ -5,7 +5,6 @@ namespace Tests\Feature;
 
 
 use App\Models\Setting;
-use App\Repositories\Interfaces\IUserRepository;
 use App\Repositories\SettingRepository;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
