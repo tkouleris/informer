@@ -30,7 +30,7 @@ class NewsfeedController extends Controller
         $user = auth()->user();
         $search_query = $request->input('search_query');
         $category_filter = $request->input('category');
-        $articles = $this->userNewsService->fetch($user->id);
+        $articles = $this->userNewsService->fetch($user->id,$search_query,$category_filter);
         $categories = $this->settingsPageService->fetch_active_categories($user->id);
         $page = 1;
         if( isset( $request->page ) )
@@ -39,6 +39,7 @@ class NewsfeedController extends Controller
         }
         $total_pages = $articles->count()/$this->items_per_page;
         $articles = $articles->forPage($page,$this->items_per_page);
+
         return [
             'categories'=>$categories,
             'search_query'=>$search_query,
