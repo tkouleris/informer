@@ -18,5 +18,5 @@ Route::post('/login','ApiControllers\AuthController@login');
 
 
 Route::group(['middleware' => ['jwt.auth']], function() {
-
+    Route::get('/newsfeed','ApiControllers\NewsfeedController@feed');
 });
