@@ -38,11 +38,6 @@ class UserNewsService
             $options .= "country=".$setting->CountryShortName;
             $options .= "&category=".$setting->CategoryShort;
             if($search_query != "") $options .= "&q=".$search_query;
-            $guzzle = $this->guzzleUtil;
-            $top_headers = NewsEndpoints::$TOP_HEADER;
-//            $NewsApiResponse = cache()->remember($options,Carbon::now()->addHours(1),function () use($guzzle, $top_headers, $options){
-//                $guzzle->getRequest($top_headers,$options);
-//            });
             $NewsApiResponse = $this->guzzleUtil->getRequest(NewsEndpoints::$TOP_HEADER,$options);
             $NewsArticles = $this->add_category($NewsApiResponse->articles,$setting->CategoryShort);
             $this->articles_array = array_merge($this->articles_array, $NewsArticles);
