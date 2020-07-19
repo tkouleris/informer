@@ -6,7 +6,7 @@ namespace App\Utils;
 
 use GuzzleHttp\Client;
 
-class GuzzleUtil
+class GuzzleUtil implements IGuzzle
 {
     protected $client;
     protected $api_key;
