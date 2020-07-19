@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class CachedGuzzleUtil extends AbstractGuzzleUtil implements IGuzzle
 {
     protected $guzzleUtil;
-    protected $api_key;
+
     /**
      * CachedGuzzleUtil constructor.
      * @param $guzzleUtil

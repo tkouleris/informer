@@ -16,12 +16,10 @@ class GuzzleUtil extends AbstractGuzzleUtil implements IGuzzle
         $this->api_key = config('app.news_api_key');
     }
 
-
     public function getRequest($url, $options = null)
     {
         $full_url = $this->get_full_url($url,$options);
         $response = $this->client->request('GET', $full_url);
         return json_decode($response->getBody());
     }
-
 }
