@@ -6,10 +6,9 @@ namespace App\Utils;
 
 use GuzzleHttp\Client;
 
-class GuzzleUtil implements IGuzzle
+class GuzzleUtil extends AbstractGuzzleUtil implements IGuzzle
 {
     protected $client;
-    protected $api_key;
 
     public function __construct()
     {
@@ -20,11 +19,7 @@ class GuzzleUtil implements IGuzzle
 
     public function getRequest($url, $options = null)
     {
-        $full_url = $url."?apiKey=".$this->api_key;
-        if($options != null)
-        {
-            $full_url .= "&".$options;
-        }
+        $full_url = $this->get_full_url($url,$options);
         $response = $this->client->request('GET', $full_url);
         return json_decode($response->getBody());
     }
