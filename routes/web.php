@@ -19,7 +19,10 @@ Route::get('/', function () {
 
 Auth::routes(['verify'=>true]);
 
+// newsfeed
 Route::get('/newsfeed', 'NewsfeedController@index')->name('newsfeed')->middleware('verified');
+
+// settings
 Route::get('/settings', 'SettingsController@settingsPage')->name('settings')->middleware('verified');
 Route::get('/settings/categories/{country_id}', 'SettingsController@country_categories')->name('country_categories')->middleware('verified');
 Route::post('/settings/categories/set', 'SettingsController@set_category_for_country')->name('set_category_for_country')->middleware('verified');

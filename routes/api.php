@@ -16,9 +16,14 @@ use Illuminate\Http\Request;
 Route::post('/login','ApiControllers\AuthController@login');
 
 
-
 Route::group(['middleware' => ['jwt.auth']], function() {
+
+    // newsfeed
     Route::get('/newsfeed','ApiControllers\NewsfeedController@feed');
+
+    // settings
     Route::get('/settings','ApiControllers\SettingsController@settingsPage');
     Route::get('/settings/categories/{country_id}','ApiControllers\SettingsController@country_categories');
+    Route::post('/settings/categories/set','ApiControllers\SettingsController@set_category_for_country');
+
 });
