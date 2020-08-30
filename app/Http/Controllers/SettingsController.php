@@ -22,7 +22,7 @@ class SettingsController extends Controller
         $this->SettingsPageService = $SettingsPageService;
     }
 
-    public function settingsPage(ICountryRepository $CountryRepository, ICategoryRepository $CategoryRepository)
+    public function settingsPage()
     {
         $settings = $this->SettingsPageService->fetch_all();
         return view('settings',compact('settings'));
