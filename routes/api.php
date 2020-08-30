@@ -26,4 +26,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('/settings/categories/{country_id}','ApiControllers\SettingsController@country_categories');
     Route::post('/settings/categories/set','ApiControllers\SettingsController@set_category_for_country');
 
+    // upload user avatar
+    Route::post('/avatar/upload','ApiControllers\ImageController@ImageUpload');
+
 });

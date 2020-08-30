@@ -10,7 +10,6 @@ class ImageService
     public function AvatarImageUpload(ImageRequest $request, $UserID)
     {
         $imageName = "avatar.".$request->image->getClientOriginalExtension();
-//        $request->image->move(public_path('images/'.$UserID), $imageName);
         $request->image->move(public_path(config('app.avatar_folder').$UserID), $imageName);
         return $imageName;
     }
