@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Interfaces\ICategoryRepository;
-use App\Repositories\Interfaces\ICountryRepository;
 use App\Services\SettingsPageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

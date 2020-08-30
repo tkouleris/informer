@@ -20,4 +20,5 @@ Route::post('/login','ApiControllers\AuthController@login');
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('/newsfeed','ApiControllers\NewsfeedController@feed');
     Route::get('/settings','ApiControllers\SettingsController@settingsPage');
+    Route::get('/settings/categories/{country_id}','ApiControllers\SettingsController@country_categories');
 });
