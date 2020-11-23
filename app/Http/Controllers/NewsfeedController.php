@@ -44,4 +44,9 @@ class NewsfeedController extends Controller
         $articles = $articles->forPage($page,$this->items_per_page);
         return view('newsfeed',compact('articles','categories','search_query','total_pages','page'));
     }
+
+    public function vueindex(Request $request, UserNewsService $UserNewsService, SettingsPageService $SettingsPageService)
+    {
+        return view('vuenewsfeed');
+    }
 }

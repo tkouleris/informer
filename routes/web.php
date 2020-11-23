@@ -21,6 +21,7 @@ Auth::routes(['verify'=>true]);
 
 // newsfeed
 Route::get('/newsfeed', 'NewsfeedController@index')->name('newsfeed')->middleware('verified');
+Route::get('/vuenewsfeed', 'NewsfeedController@vueindex')->name('vuenewsfeed')->middleware('verified');
 
 // settings
 Route::get('/settings', 'SettingsController@settingsPage')->name('settings')->middleware('verified');
