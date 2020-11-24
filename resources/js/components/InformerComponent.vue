@@ -37,13 +37,19 @@ export default {
     },
     methods:{
         login_attempt: function (){
+
             let credentials = {
                 'email': this.email,
                 'password': this.password
             }
             Vue.axios.post("api/login", credentials)
-                .then(response => console.log(response))
-                .catch(error=>alert('Wrong Username or Password'));
+                .then(
+                    response =>{
+                        localStorage.token = response.data.token
+                    }
+                ).catch(
+                    error=>alert('Wrong Username or Password')
+                );
         }
     }
 }

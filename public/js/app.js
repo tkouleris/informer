@@ -1957,7 +1957,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
         'password': this.password
       };
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.post("api/login", credentials).then(function (response) {
-        return console.log(response);
+        localStorage.token = response.data.token;
       })["catch"](function (error) {
         return alert('Wrong Username or Password');
       });
