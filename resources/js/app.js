@@ -5,10 +5,12 @@
  */
 
 import NewsfeedComponent from "./components/NewsfeedComponent";
-
-require('./bootstrap');
-
+import InformerComponent from "./components/InformerComponent";
+//
+// require('./bootstrap');
+//
 window.Vue = require('vue');
+// require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,5 +33,8 @@ window.Vue = require('vue');
 
 const app = new Vue({
     el: '#app',
-    components: {NewsfeedComponent}
+    components: {
+        InformerComponent,
+        NewsfeedComponent
+    }
 });
