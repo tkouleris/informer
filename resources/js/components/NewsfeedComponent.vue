@@ -19,23 +19,33 @@ export default {
     },
     data: function () {
         return {
-            articles: null
+            articles: null,
+            header: null
         }
     },
     mounted() {
-        var yourConfig = {
-            headers: {
-                Authorization: "Bearer " + localStorage.token
+
+        this.getNews();
+
+    },
+    methods:{
+        getNews: function (){
+            this.initHeader();
+            Vue.axios.get(config.API_URL + "/api/newsfeed", this.header)
+                .then(response =>{
+                    this.articles = response.data.articles
+                })
+                .catch(
+                    error=>alert('Wrong Username or Password')
+                );
+        },
+        initHeader: function (){
+            this.header = {
+                headers: {
+                    Authorization: "Bearer " + localStorage.token
+                }
             }
         }
-
-        Vue.axios.get(config.API_URL + "/api/newsfeed", yourConfig)
-            .then(response =>{
-                this.articles = response.data.articles
-            })
-            .catch(
-            error=>alert('Wrong Username or Password')
-        );
     }
 }
 </script>
