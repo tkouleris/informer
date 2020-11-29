@@ -1,7 +1,7 @@
 <template>
-
     <div class="login">
-        <form id="login" method="get" action="login.php">
+
+        <form id="login" method="get">
             <label><b>User Name
             </b>
             </label>
@@ -27,8 +27,9 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios,axios)
+// Vue.use(VueRouter);
 export default {
-    name: "InformerComponent",
+    name: "LoginComponent",
     data(){
         return {
             email: null,

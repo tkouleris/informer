@@ -11,7 +11,7 @@
 |
 */
 
-Route::view('/vuelogin', 'vue.vuelogin');
+Route::view('/vue/{any?}', 'vue.app')->where('any','.*');
 
 Route::get('/', function () {
     if (Auth::check()) return redirect('newsfeed');
