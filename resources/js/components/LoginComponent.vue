@@ -2,7 +2,7 @@
     <div class="login">
 
         <form id="login" method="get">
-            <label><b>User Name
+            <label><b>Email
             </b>
             </label>
             <input v-model="email" type="text" name="Uname" id="Uname" placeholder="Username">
@@ -16,8 +16,6 @@
             <br><br>
             <input type="checkbox" id="check">
             <span>Remember me</span>
-<!--            <br><br>-->
-<!--            Forgot <a href="#">Password</a>-->
         </form>
     </div>
 </template>
@@ -25,9 +23,10 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios'
+import config from '../config'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios,axios)
-// Vue.use(VueRouter);
+
 export default {
     name: "LoginComponent",
     data(){
@@ -43,11 +42,15 @@ export default {
                 'email': this.email,
                 'password': this.password
             }
-            Vue.axios.post("api/login", credentials)
+
+            Vue.axios.post(config.API_URL + "/api/login", credentials)
                 .then(
                     response =>{
-                        localStorage.token = response.data.token
+                        console.log('logged in');
+                        localStorage.token = response.data.token;
+                        this.$router.push('/vue/newsfeed');
                     }
+
                 ).catch(
                     error=>alert('Wrong Username or Password')
                 );
