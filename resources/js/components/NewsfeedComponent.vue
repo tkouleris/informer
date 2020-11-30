@@ -27,10 +27,11 @@ export default {
         }
     },
     mounted() {
-        this.getNews();
+        this.getNews(null);
     },
     methods:{
         getNews: function (search_string){
+            console.log(search_string)
             this.initHeader();
             this.initArticles()
             Vue.axios.get(this.getFullUrl(search_string), this.header)
@@ -55,7 +56,7 @@ export default {
         getFullUrl(search_string)
         {
             let full_url = config.API_URL + "/api/newsfeed";
-            if(search_string !== undefined){
+            if(search_string !== undefined || search_string !== null){
                 full_url = full_url +"?search_query=" + search_string;
             }
             return full_url;

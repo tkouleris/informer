@@ -2135,12 +2135,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
     };
   },
   mounted: function mounted() {
-    this.getNews();
+    this.getNews(null);
   },
   methods: {
     getNews: function getNews(search_string) {
       var _this = this;
 
+      console.log(search_string);
       this.initHeader();
       this.initArticles();
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get(this.getFullUrl(search_string), this.header).then(function (response) {
@@ -2162,7 +2163,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
     getFullUrl: function getFullUrl(search_string) {
       var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/newsfeed";
 
-      if (search_string !== undefined) {
+      if (search_string !== undefined || search_string !== null) {
         full_url = full_url + "?search_query=" + search_string;
       }
 
