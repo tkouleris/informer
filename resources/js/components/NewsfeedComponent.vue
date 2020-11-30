@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <SearchComponent></SearchComponent>
         <ArticleComponent v-for="article in articles" :article="article"></ArticleComponent>
     </div>
 </template>
@@ -12,10 +13,12 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios,axios)
 import ArticleComponent from "./ArticleComponent";
+import SearchComponent from "./SearchComponent";
 export default {
     name: "NewsfeedComponent",
     components:{
-      ArticleComponent
+        ArticleComponent,
+        SearchComponent
     },
     data: function () {
         return {
