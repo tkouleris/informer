@@ -2138,14 +2138,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
     this.getNews();
   },
   methods: {
-    getNews: function getNews() {
+    getNews: function getNews(search_string) {
       var _this = this;
 
       this.initHeader();
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get(_config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/newsfeed", this.header).then(function (response) {
+      this.initArticles();
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get(this.getFullUrl(search_string), this.header).then(function (response) {
         _this.articles = response.data.articles;
       })["catch"](function (error) {
-        return alert('Wrong Username or Password');
+        return alert('No news found with this keyword');
       });
     },
     initHeader: function initHeader() {
@@ -2154,6 +2155,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
           Authorization: "Bearer " + localStorage.token
         }
       };
+    },
+    initArticles: function initArticles() {
+      this.articles = null;
+    },
+    getFullUrl: function getFullUrl(search_string) {
+      var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/newsfeed";
+
+      if (search_string !== undefined) {
+        full_url = full_url + "?search_query=" + search_string;
+      }
+
+      return full_url;
     }
   }
 });
@@ -2182,8 +2195,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SearchComponent"
+  name: "SearchComponent",
+  data: function data() {
+    return {
+      txt_search: null
+    };
+  },
+  methods: {
+    getSearchString: function getSearchString() {
+      return this.txt_search;
+    },
+    search_news: function search_news($event) {
+      if ($event.keyCode !== 13) {
+        return;
+      }
+
+      this.$parent.getNews(this.txt_search);
+    }
+  }
 });
 
 /***/ }),
@@ -60505,38 +60541,50 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                name: "txt_search",
-                placeholder: "Search",
-                "aria-label": "Search",
-                value: ""
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.txt_search,
+                expression: "txt_search"
               }
-            }),
-            _vm._v(" "),
-            _c("i", {
-              staticClass: "fas fa-search",
-              attrs: { "aria-hidden": "true" }
-            })
-          ])
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Search",
+              "aria-label": "Search",
+              value: ""
+            },
+            domProps: { value: _vm.txt_search },
+            on: {
+              keypress: function($event) {
+                return _vm.search_news($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.txt_search = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("i", {
+            staticClass: "fas fa-search",
+            attrs: { "aria-hidden": "true" }
+          })
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

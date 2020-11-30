@@ -27,19 +27,18 @@ export default {
         }
     },
     mounted() {
-
         this.getNews();
-
     },
     methods:{
-        getNews: function (){
+        getNews: function (search_string){
             this.initHeader();
-            Vue.axios.get(config.API_URL + "/api/newsfeed", this.header)
+            this.initArticles()
+            Vue.axios.get(this.getFullUrl(search_string), this.header)
                 .then(response =>{
                     this.articles = response.data.articles
                 })
                 .catch(
-                    error=>alert('Wrong Username or Password')
+                    error=>alert('No news found with this keyword')
                 );
         },
         initHeader: function (){
@@ -48,6 +47,18 @@ export default {
                     Authorization: "Bearer " + localStorage.token
                 }
             }
+        },
+        initArticles()
+        {
+            this.articles = null;
+        },
+        getFullUrl(search_string)
+        {
+            let full_url = config.API_URL + "/api/newsfeed";
+            if(search_string !== undefined){
+                full_url = full_url +"?search_query=" + search_string;
+            }
+            return full_url;
         }
     }
 }
