@@ -2040,8 +2040,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeaderComponent",
@@ -60431,62 +60429,72 @@ var render = function() {
           staticClass: "navbar navbar-expand-md navbar-dark bg-dark shadow-sm"
         },
         [
-          _c("div", { staticClass: "container" }, [
-            _c("a", { staticClass: "navbar-brand", attrs: { href: "" } }, [
-              _vm._v("\n                    Informer\n                ")
-            ]),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse navbar-collapse",
-                attrs: { id: "navbarSupportedContent" }
-              },
-              [
-                _c("ul", { staticClass: "navbar-nav mr-auto" }),
-                _vm._v(" "),
-                _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                  _c("li", { staticClass: "nav-item dropdown" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "dropdown-menu dropdown-menu-right",
-                        attrs: { "aria-labelledby": "navbarDropdown" }
-                      },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { to: { path: "settings" } }
-                          },
-                          [_vm._v("Settings")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            on: { click: _vm.logout }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                    Logout\n                                "
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    )
+          _c(
+            "div",
+            { staticClass: "container" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "navbar-brand",
+                  attrs: { to: { path: "newsfeed" } }
+                },
+                [_vm._v("Informer")]
+              ),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "collapse navbar-collapse",
+                  attrs: { id: "navbarSupportedContent" }
+                },
+                [
+                  _c("ul", { staticClass: "navbar-nav mr-auto" }),
+                  _vm._v(" "),
+                  _c("ul", { staticClass: "navbar-nav ml-auto" }, [
+                    _c("li", { staticClass: "nav-item dropdown" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "dropdown-menu dropdown-menu-right",
+                          attrs: { "aria-labelledby": "navbarDropdown" }
+                        },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { to: { path: "settings" } }
+                            },
+                            [_vm._v("Settings")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: { click: _vm.logout }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                    Logout\n                                "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
                   ])
-                ])
-              ]
-            )
-          ])
+                ]
+              )
+            ],
+            1
+          )
         ]
       )
     ])
@@ -76811,7 +76819,14 @@ var vue_url = "/vue/";
   mode: 'history',
   routes: [{
     path: vue_url,
-    component: _components_LoginComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _components_LoginComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
+    beforeEnter: function beforeEnter(to, from, next) {
+      if (localStorage.token != null) {
+        next(vue_url + 'newsfeed');
+      } else {
+        next();
+      }
+    }
   }, {
     path: vue_url + 'newsfeed',
     component: _components_NewsfeedComponent__WEBPACK_IMPORTED_MODULE_3__["default"],

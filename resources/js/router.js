@@ -11,7 +11,14 @@ export default new VueRouter({
     routes:[
         {
             path:vue_url,
-            component: LoginComponent
+            component: LoginComponent,
+            beforeEnter:(to, from, next) =>{
+                if(localStorage.token != null){
+                    next(vue_url + 'newsfeed');
+                }else{
+                    next();
+                }
+            }
         },
         {
             path: vue_url + 'newsfeed',
