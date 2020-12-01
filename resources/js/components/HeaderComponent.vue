@@ -31,9 +31,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="">
-                                        Settings
-                                    </a>
+                                    <router-link class="dropdown-item" :to="{ path: 'settings' }">Settings</router-link>
                                     <a class="dropdown-item" @click="logout">
                                         Logout
                                     </a>

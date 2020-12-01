@@ -2042,8 +2042,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeaderComponent",
@@ -60461,13 +60459,12 @@ var render = function() {
                       },
                       [
                         _c(
-                          "a",
-                          { staticClass: "dropdown-item", attrs: { href: "" } },
-                          [
-                            _vm._v(
-                              "\n                                    Settings\n                                "
-                            )
-                          ]
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { path: "settings" } }
+                          },
+                          [_vm._v("Settings")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -60482,7 +60479,8 @@ var render = function() {
                             )
                           ]
                         )
-                      ]
+                      ],
+                      1
                     )
                   ])
                 ])
