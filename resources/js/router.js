@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
 import LoginComponent from "./components/LoginComponent";
-import ExampleComponent from "./components/ExampleComponent";
 import NewsfeedComponent from "./components/NewsfeedComponent";
-import config from "./config.js"
+import SettingsComponent from "./components/SettingsComponent";
 
 Vue.use(VueRouter);
 var vue_url = "/vue/"
@@ -26,9 +25,9 @@ export default new VueRouter({
             }
         },
         {
-            path:vue_url + 'example',
-            component: ExampleComponent
-        }
+            path:vue_url + 'settings',
+            component: SettingsComponent
+        },
     ]
 
 
