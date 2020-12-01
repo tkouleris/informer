@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <header-component></header-component>
         <SearchComponent></SearchComponent>
         <ArticleComponent v-for="article in articles" :article="article"></ArticleComponent>
     </div>
@@ -14,9 +15,11 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios,axios)
 import ArticleComponent from "./ArticleComponent";
 import SearchComponent from "./SearchComponent";
+import HeaderComponent from "./HeaderComponent";
 export default {
     name: "NewsfeedComponent",
     components:{
+        HeaderComponent,
         ArticleComponent,
         SearchComponent
     },
@@ -31,7 +34,7 @@ export default {
     },
     methods:{
         getNews: function (search_string){
-            console.log(search_string)
+
             this.initHeader();
             this.initArticles()
             Vue.axios.get(this.getFullUrl(search_string), this.header)
@@ -55,10 +58,12 @@ export default {
         },
         getFullUrl(search_string)
         {
+
             let full_url = config.API_URL + "/api/newsfeed";
-            if(search_string !== undefined || search_string !== null){
+            if(search_string !== null){
                 full_url = full_url +"?search_query=" + search_string;
             }
+
             return full_url;
         }
     }
