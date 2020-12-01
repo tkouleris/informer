@@ -76811,6 +76811,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_LoginComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/LoginComponent */ "./resources/js/components/LoginComponent.vue");
 /* harmony import */ var _components_ExampleComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ExampleComponent */ "./resources/js/components/ExampleComponent.vue");
 /* harmony import */ var _components_NewsfeedComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/NewsfeedComponent */ "./resources/js/components/NewsfeedComponent.vue");
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./config.js */ "./resources/js/config.js");
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_config_js__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -76825,7 +76828,14 @@ var vue_url = "/vue/";
     component: _components_LoginComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
     path: vue_url + 'newsfeed',
-    component: _components_NewsfeedComponent__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _components_NewsfeedComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
+    beforeEnter: function beforeEnter(to, from, next) {
+      if (localStorage.token == null) {
+        next(vue_url);
+      } else {
+        next();
+      }
+    }
   }, {
     path: vue_url + 'example',
     component: _components_ExampleComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
