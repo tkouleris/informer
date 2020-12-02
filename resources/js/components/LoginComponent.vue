@@ -46,8 +46,9 @@ export default {
             Vue.axios.post(config.API_URL + "/api/login", credentials)
                 .then(
                     response =>{
-                        console.log('logged in');
                         localStorage.token = response.data.token;
+                        localStorage.name = response.data.name;
+                        localStorage.id = response.data.id;
                         this.$router.push('/vue/newsfeed');
                     }
 

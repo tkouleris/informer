@@ -22,10 +22,10 @@
 
                             <li class="nav-item dropdown">
 
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                     <img class="rounded-circle z-depth-0 md-avatar size-1"
-                                         src=""
-                                    /> name_placeholder <span class="caret"></span>
+                                         :src="avatar_url"
+                                    /> {{ username }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -49,6 +49,16 @@
 import config from '../config'
 export default {
     name: "HeaderComponent",
+    data(){
+        return {
+            username: null,
+            avatar_url:null,
+        }
+    },
+    mounted: function () {
+        this.username = localStorage.name
+        this.avatar_url = config.API_URL + '/images/' + localStorage.id + '/avatar.jpg';
+    },
     methods:{
         logout(){
             localStorage.clear();
