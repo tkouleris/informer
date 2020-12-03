@@ -2387,20 +2387,25 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    this.initializePage();
+  },
+  methods: {
+    initializePage: function initializePage() {
+      var _this = this;
 
-    this.header = {
-      headers: {
-        Authorization: "Bearer " + localStorage.token
-      }
-    };
-    var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/settings";
-    vue__WEBPACK_IMPORTED_MODULE_1___default.a.axios.get(full_url, this.header).then(function (response) {
-      _this.categories = response.data.Categories;
-      _this.countries = response.data.Countries;
-    })["catch"](function (error) {
-      return alert('No news found with this keyword');
-    });
+      this.header = {
+        headers: {
+          Authorization: "Bearer " + localStorage.token
+        }
+      };
+      var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/settings";
+      vue__WEBPACK_IMPORTED_MODULE_1___default.a.axios.get(full_url, this.header).then(function (response) {
+        _this.categories = response.data.Categories;
+        _this.countries = response.data.Countries;
+      })["catch"](function (error) {
+        return alert('No news found with this keyword');
+      });
+    }
   }
 });
 

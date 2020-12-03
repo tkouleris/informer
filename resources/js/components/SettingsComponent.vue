@@ -93,20 +93,26 @@ export default {
         }
     },
     mounted() {
-        this.header = {
-            headers: {
-                Authorization: "Bearer " + localStorage.token
+        this.initializePage();
+    },
+    methods:{
+        initializePage: function ()
+        {
+            this.header = {
+                headers: {
+                    Authorization: "Bearer " + localStorage.token
+                }
             }
+            let full_url = config.API_URL + "/api/settings";
+            Vue.axios.get(full_url, this.header)
+                .then(response =>{
+                    this.categories = response.data.Categories;
+                    this.countries = response.data.Countries;
+                })
+                .catch(
+                    error=>alert('No news found with this keyword')
+                );
         }
-        let full_url = config.API_URL + "/api/settings";
-        Vue.axios.get(full_url, this.header)
-            .then(response =>{
-                this.categories = response.data.Categories;
-                this.countries = response.data.Countries;
-            })
-            .catch(
-                error=>alert('No news found with this keyword')
-            );
     }
 }
 </script>
