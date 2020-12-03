@@ -2287,10 +2287,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HeaderComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeaderComponent */ "./resources/js/components/HeaderComponent.vue");
-//
-//
-//
-//
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config */ "./resources/js/config.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2373,10 +2373,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SettingsComponent",
   components: {
     HeaderComponent: _HeaderComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      categories: null,
+      countries: null
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.header = {
+      headers: {
+        Authorization: "Bearer " + localStorage.token
+      }
+    };
+    var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/settings";
+    vue__WEBPACK_IMPORTED_MODULE_1___default.a.axios.get(full_url, this.header).then(function (response) {
+      _this.categories = response.data.Categories;
+      _this.countries = response.data.Countries;
+    })["catch"](function (error) {
+      return alert('No news found with this keyword');
+    });
   }
 });
 
@@ -60866,7 +60890,74 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container" },
-    [_c("header-component"), _vm._v(" "), _vm._m(0)],
+    [
+      _c("header-component"),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "card" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c(
+                  "select",
+                  {
+                    staticClass: "browser-default custom-select",
+                    attrs: { name: "setting_country_select" }
+                  },
+                  _vm._l(_vm.countries, function(country) {
+                    return _c("option", { attrs: { id: country.CountryID } }, [
+                      _vm._v(_vm._s(country.CountryName))
+                    ])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.categories, function(category) {
+                  return _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "checkbox",
+                        name: "chbx_category_category_id",
+                        id: category.CategoryID
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label",
+                        staticStyle: { color: "#000000" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(category.CategoryName) +
+                            "\n                        "
+                        )
+                      ]
+                    )
+                  ])
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4)
+          ])
+        ])
+      ])
+    ],
     1
   )
 }
@@ -60875,180 +60966,135 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("h2", { staticStyle: { color: "#000000" } }, [
-                _vm._v("User Settings")
-              ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h2", { staticStyle: { color: "#000000" } }, [_vm._v("User Settings")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h2", { staticStyle: { color: "#000000" } }, [_vm._v("Avatar")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c(
+        "form",
+        {
+          attrs: { action: "", method: "POST", enctype: "multipart/form-data" }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file", name: "image" }
+              })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "col-md-6" }, [
               _c(
-                "select",
-                {
-                  staticClass: "browser-default custom-select",
-                  attrs: { name: "setting_country_select" }
-                },
-                [_c("option", [_vm._v("Country")])]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-check" }, [
-                _c("input", {
-                  staticClass: "form-check-input",
-                  attrs: {
-                    type: "checkbox",
-                    name: "chbx_category_category_id",
-                    id: "category_id"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "form-check-label",
-                    staticStyle: { color: "#000000" },
-                    attrs: { for: "category_id" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                                    Category name\n                                "
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-header" }, [
-              _c("h2", { staticStyle: { color: "#000000" } }, [
-                _vm._v("Avatar")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "form",
-                {
-                  attrs: {
-                    action: "",
-                    method: "POST",
-                    enctype: "multipart/form-data"
-                  }
-                },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: { type: "file", name: "image" }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          attrs: { type: "submit" }
-                        },
-                        [_vm._v("Upload")]
-                      )
-                    ])
-                  ])
-                ]
+                "button",
+                { staticClass: "btn btn-success", attrs: { type: "submit" } },
+                [_vm._v("Upload")]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-header" }, [
-              _c("h2", { staticStyle: { color: "#000000" } }, [
-                _vm._v("Change Password")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("form", { attrs: { method: "POST", action: "" } }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "alert alert-danger",
-                    attrs: { role: "alert" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                                    Passwords not match!\n                                "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col-md-2 col-form-label text-md-right",
-                      staticStyle: { color: "black" },
-                      attrs: { for: "new_password" }
-                    },
-                    [_vm._v("Password")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "new_password",
-                        type: "password",
-                        name: "new_password",
-                        required: ""
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col-md-2 col-form-label text-md-right",
-                      staticStyle: { color: "black" },
-                      attrs: { for: "password_confirm" }
-                    },
-                    [_vm._v("Confirm")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("input", {
-                      staticClass:
-                        "form-control @error('confirm_password') is-invalid @enderror",
-                      attrs: {
-                        id: "password_confirm",
-                        type: "password",
-                        name: "password_confirm",
-                        required: ""
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row mb-0" }, [
-                  _c("div", { staticClass: "col-md-6 offset-md-4" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                            Update Password\n                                        "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ])
             ])
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h2", { staticStyle: { color: "#000000" } }, [
+        _vm._v("Change Password")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c("form", { attrs: { method: "POST", action: "" } }, [
+        _c(
+          "div",
+          { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+          [
+            _vm._v(
+              "\n                            Passwords not match!\n                        "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
+            {
+              staticClass: "col-md-2 col-form-label text-md-right",
+              staticStyle: { color: "black" },
+              attrs: { for: "new_password" }
+            },
+            [_vm._v("Password")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                id: "new_password",
+                type: "password",
+                name: "new_password",
+                required: ""
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
+            {
+              staticClass: "col-md-2 col-form-label text-md-right",
+              staticStyle: { color: "black" },
+              attrs: { for: "password_confirm" }
+            },
+            [_vm._v("Confirm")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("input", {
+              staticClass:
+                "form-control @error('confirm_password') is-invalid @enderror",
+              attrs: {
+                id: "password_confirm",
+                type: "password",
+                name: "password_confirm",
+                required: ""
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row mb-0" }, [
+          _c("div", { staticClass: "col-md-6 offset-md-4" }, [
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [
+                _vm._v(
+                  "\n                                    Update Password\n                                "
+                )
+              ]
+            )
           ])
         ])
       ])
