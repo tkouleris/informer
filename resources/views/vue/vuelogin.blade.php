@@ -24,7 +24,7 @@
 <body>
     <div id="app">
         <router-link :to="{ name: 'foo' }">Home</router-link> |
-        <informer-component></informer-component>
+{{--        <informer-component></informer-component>--}}
     </div>
 </body>
 </html>

@@ -2153,12 +2153,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config */ "./resources/js/config.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_scroll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-scroll */ "./node_modules/vue-scroll/dist/vue-scroll.esm.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _ArticleComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ArticleComponent */ "./resources/js/components/ArticleComponent.vue");
-/* harmony import */ var _SearchComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchComponent */ "./resources/js/components/SearchComponent.vue");
-/* harmony import */ var _HeaderComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./HeaderComponent */ "./resources/js/components/HeaderComponent.vue");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _ArticleComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ArticleComponent */ "./resources/js/components/ArticleComponent.vue");
+/* harmony import */ var _SearchComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchComponent */ "./resources/js/components/SearchComponent.vue");
+/* harmony import */ var _HeaderComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./HeaderComponent */ "./resources/js/components/HeaderComponent.vue");
 //
 //
 //
@@ -2174,34 +2173,38 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_4___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_scroll__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewsfeedComponent",
   components: {
-    HeaderComponent: _HeaderComponent__WEBPACK_IMPORTED_MODULE_7__["default"],
-    ArticleComponent: _ArticleComponent__WEBPACK_IMPORTED_MODULE_5__["default"],
-    SearchComponent: _SearchComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
+    HeaderComponent: _HeaderComponent__WEBPACK_IMPORTED_MODULE_6__["default"],
+    ArticleComponent: _ArticleComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
+    SearchComponent: _SearchComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
-      articles: null,
-      header: null
+      articles: [],
+      temp: [],
+      header: null,
+      currentPage: 0,
+      totalPages: 0
     };
   },
+  created: function created() {
+    document.addEventListener('scroll', this.handleScroll);
+  },
   mounted: function mounted() {
-    console.log('mounted');
     this.getNews(null);
   },
   methods: {
     getNews: function getNews(search_string) {
-      var _this = this;
-
+      var self = this;
       this.initHeader();
       this.initArticles();
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get(this.getFullUrl(search_string), this.header).then(function (response) {
-        _this.articles = response.data.articles;
+        self.currentPage = response.data.page;
+        self.articles = response.data.articles;
+        self.totalPages = response.data.total_pages;
       })["catch"](function (error) {
         return alert('No news found with this keyword');
       });
@@ -2221,12 +2224,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_scroll__WEBPACK_IMPORTED_MODU
 
       if (search_string !== null) {
         full_url = full_url + "?search_query=" + search_string;
+      } else if (this.currentPage !== 0 && this.currentPage !== this.totalPages) {
+        this.currentPage++;
+        full_url = full_url + "?page=" + this.currentPage;
       }
 
       return full_url;
     },
-    onScroll: function onScroll() {
-      console.log('scroll');
+    handleScroll: function handleScroll() {
+      var bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight;
+
+      if (bottomOfWindow) {
+        this.getNews(null);
+      }
     }
   }
 });
@@ -60799,17 +60809,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      directives: [
-        {
-          name: "scroll",
-          rawName: "v-scroll",
-          value: _vm.onScroll,
-          expression: "onScroll"
-        }
-      ],
-      staticClass: "container"
-    },
+    { staticClass: "container", on: { scroll: _vm.handleScroll } },
     [
       _c("header-component"),
       _vm._v(" "),
@@ -64421,213 +64421,6 @@ if (inBrowser && window.Vue) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (VueRouter);
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-scroll/dist/vue-scroll.esm.js":
-/*!********************************************************!*\
-  !*** ./node_modules/vue-scroll/dist/vue-scroll.esm.js ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/**
-  * vue-scroll vundefined
-  * (c) 2019 Wang Pin
-  * @license MIT
-  */
-var debounce = function (func, delay) {
-  var inDebounce;
-  return function() {
-    var context = this;
-    var args = arguments;
-    clearTimeout(inDebounce);
-    inDebounce = setTimeout(function () { return func.apply(context, args); }, delay);
-  }
-};
-var throttle = function (func, limit) {
-  var lastFunc;
-  var lastRan;
-  return function() {
-    var context = this;
-    var args = arguments;
-    if (!lastRan) {
-      func.apply(context, args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(function() {
-        if (Date.now() - lastRan >= limit) {
-          func.apply(context, args);
-          lastRan = Date.now();
-        }
-      }, limit - (Date.now() - lastRan));
-    }
-  }
-};
-var isNumber = function(arg) {
-  return typeof arg === 'number' && arg !== NaN
-};
-var isFunction = function(arg) {
-  return typeof arg === 'function'
-};
-var isObject = function(arg) {
-  return Object.prototype.toString.call(arg) === '[object Object]'
-};
-var isInteger = function(arg) {
-  return isNumber(arg) && Math.round(arg) === arg
-};
-var get = function(arg, path, def) {
-  try {
-    return eval(("arg." + path))
-  } catch (err) {
-    return def
-  }
-};
-
-var dom = (function () {
-  var listeners = new Map();
-  var SCROLL = 'scroll';
-  function addEventListener (element, event, funcs, opt) {
-    function fn (e) {
-      var data;
-      var target = e.target || e.srcElement;
-      e = e || window.e;
-      if (e.type === SCROLL) {
-        if (target === document) {
-          data = { scrollTop: get(document, 'body.scrollTop', 0), scrollLeft: get(document, 'body.scrollLeft', 0) };
-        } else {
-          data = { scrollTop: get(target, 'scrollTop', 0), scrollLeft: get(target, 'scrollLeft', 0) };
-        }
-      }
-      funcs.forEach(function (f) {
-        f(e, data);
-      });
-    }
-    if (isObject(opt)) {
-      if (isInteger(opt.throttle) && isFinite(opt.throttle) && opt.throttle > -1) {
-        fn = throttle(fn, opt.throttle);
-      }
-      if (isInteger(opt.debounce) && isFinite(opt.debounce) && opt.debounce > -1) {
-        fn = debounce(fn, opt.debounce);
-      }
-    }
-    if (event === SCROLL) {
-      if(element === document.body || element === document || element === window) {
-        document.onscroll = fn;
-      } else {
-        if (element.addEventListener) {
-          element.addEventListener(event, fn);
-        } else {
-          element.attachEvent('on' + event, fn);
-        }
-      }
-    }
-  }
-  function bind (element, event, fn, opt) {
-    var funcs, eventFuncs;
-    if (!isFunction(fn)) {
-      throw new Error('Scroll handler is not a function');
-    }
-    if (!listeners.has(element)) {
-      listeners.set(element, new Map());
-    }
-    funcs = listeners.get(element);
-    if (!funcs.has(event)) {
-      funcs.set(event, []);
-    }
-    eventFuncs = funcs.get(event);
-    if (!eventFuncs.length) {
-      addEventListener(element, event, eventFuncs, opt);
-    }
-    eventFuncs.push(fn);
-  }
-  function unbind (element, event, fn) {
-    var funcs, eventFuncs;
-    if (!isFunction(fn)) {
-      return;
-    }
-    if (!listeners.has(element)) {
-      listeners.set(element, new Map());
-    }
-    funcs = listeners.get(element);
-    if (!funcs.has(event)) {
-      funcs.set(event, []);
-    }
-    eventFuncs = funcs.get(event);
-    if (eventFuncs.indexOf(fn) > -1) {
-      eventFuncs.splice(eventFuncs.indexOf(fn), 1);
-      return true;
-    }
-    return false;
-  }
-  return {
-    bind: bind,
-    unbind: unbind
-  }
-})();
-
-var vuescroll = new Object;
-vuescroll.install = function (Vue, options) {
-  options = options || {};
-  var SCROLL = 'scroll';
-  var THROTTLE = 'throttle';
-  var DEBOUNCE = 'debounce';
-  var VALID_ARGS = [THROTTLE, DEBOUNCE];
-  function bindValue (el, value, arg) {
-    var fn, opt = Object.assign({}, options);
-    if (isObject(value) || isFunction(value)) {
-      fn = value;
-      if (VALID_ARGS.indexOf(arg) > -1) {
-        fn = value.fn;
-        if (arg === THROTTLE) {
-          opt = { throttle: value.throttle};
-        } else if(arg === DEBOUNCE) {
-          opt = { debounce: value.debounce};
-        }
-      }
-      try {
-        dom.bind(el, SCROLL, fn, opt);
-      } catch(err) {
-        console.warn('Unexpected error happened when binding listener');
-      }
-    } else {
-      console.warn('Unexpected scroll properties');
-    }
-  }
-  function unbindValue (el, value, arg) {
-    var fn;
-    if (isObject(value) || isFunction(value)) {
-      fn = value;
-      if (VALID_ARGS.indexOf(arg) > -1)  {
-        fn = value.fn;
-      }
-      dom.unbind(el, SCROLL, fn);
-    }
-  }
-  Vue.directive(SCROLL, {
-    bind: function(el, binding, vnode, oldVnode) {
-      bindValue(el, binding.value, binding.arg);
-    },
-    inserted: function(el, binding) {
-    },
-    update: function(el, binding) {
-      if (binding.value === binding.oldValue) {
-        return;
-      }
-      bindValue(el, binding.value, binding.arg);
-      unbindValue(el, binding.oldValue, binding.arg);
-    },
-    unbind: function(el, binding) {
-      unbindValue(el, binding.value, binding.arg);
-    }
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (vuescroll);
 
 
 /***/ }),

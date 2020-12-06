@@ -1,5 +1,5 @@
 <template>
-    <div v-scroll="onScroll" class="container">
+    <div class="container" @scroll="handleScroll">
         <header-component></header-component>
         <SearchComponent></SearchComponent>
         <ArticleComponent v-for="article in articles" :article="article" :key="article.id"></ArticleComponent>
@@ -10,17 +10,14 @@
 import Vue from 'vue'
 import axios from 'axios'
 import config from '../config'
-import vuescroll from 'vue-scroll'
 import VueAxios from 'vue-axios'
-
 
 import ArticleComponent from "./ArticleComponent";
 import SearchComponent from "./SearchComponent";
 import HeaderComponent from "./HeaderComponent";
 
-
 Vue.use(VueAxios,axios)
-Vue.use(vuescroll)
+
 export default {
     name: "NewsfeedComponent",
     components:{
@@ -30,25 +27,32 @@ export default {
     },
     data: function () {
         return {
-            articles: null,
-            header: null
+            articles: [],
+            temp: [],
+            header: null,
+            currentPage: 0,
+            totalPages:0,
         }
     },
+    created() {
+        document.addEventListener('scroll', this.handleScroll)
+    },
     mounted() {
-        console.log('mounted');
         this.getNews(null);
     },
     methods:{
-        getNews: function (search_string){
-
+        getNews:function (search_string) {
+            let self = this;
             this.initHeader();
             this.initArticles()
             Vue.axios.get(this.getFullUrl(search_string), this.header)
                 .then(response =>{
-                    this.articles = response.data.articles
+                    self.currentPage = response.data.page;
+                    self.articles = response.data.articles;
+                    self.totalPages = response.data.total_pages
                 })
                 .catch(
-                    error=>alert('No news found with this keyword')
+                    error => alert('No news found with this keyword')
                 );
         },
         initHeader: function (){
@@ -64,16 +68,25 @@ export default {
         },
         getFullUrl(search_string)
         {
-
             let full_url = config.API_URL + "/api/newsfeed";
             if(search_string !== null){
                 full_url = full_url +"?search_query=" + search_string;
+            }else if(this.currentPage !== 0 && this.currentPage !== this.totalPages){
+                this.currentPage++
+                full_url = full_url +"?page=" + this.currentPage;
             }
-
             return full_url;
         },
-        onScroll(){
-            console.log('scroll');
+        handleScroll(){
+            let bottomOfWindow = Math.max(
+                window.pageYOffset,
+                document.documentElement.scrollTop,
+                document.body.scrollTop
+            ) + window.innerHeight === document.documentElement.offsetHeight;
+
+            if (bottomOfWindow) {
+                this.getNews(null);
+            }
         }
     }
 }
