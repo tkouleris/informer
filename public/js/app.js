@@ -2186,7 +2186,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
       articles: [],
       temp: [],
       header: null,
-      currentPage: 0,
+      currentPage: 1,
       totalPages: 0
     };
   },
@@ -2202,6 +2202,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
       this.initHeader();
       this.initArticles();
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get(this.getFullUrl(search_string), this.header).then(function (response) {
+        // for(var i = 0; i<response.data.articles.length; i++)
+        //     self.articles.push(response.data.articles[i]);
         self.currentPage = response.data.page;
         self.articles = response.data.articles;
         self.totalPages = response.data.total_pages;
@@ -2224,8 +2226,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
 
       if (search_string !== null) {
         full_url = full_url + "?search_query=" + search_string;
-      } else if (this.currentPage !== 0 && this.currentPage !== this.totalPages) {
-        this.currentPage++;
+      } else if (this.currentPage !== 1 && this.currentPage <= this.totalPages) {
         full_url = full_url + "?page=" + this.currentPage;
       }
 
@@ -2235,6 +2236,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
       var bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight;
 
       if (bottomOfWindow) {
+        this.currentPage++;
         this.getNews(null);
       }
     }

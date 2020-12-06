@@ -30,7 +30,7 @@ export default {
             articles: [],
             temp: [],
             header: null,
-            currentPage: 0,
+            currentPage: 1,
             totalPages:0,
         }
     },
@@ -47,6 +47,8 @@ export default {
             this.initArticles()
             Vue.axios.get(this.getFullUrl(search_string), this.header)
                 .then(response =>{
+                    // for(var i = 0; i<response.data.articles.length; i++)
+                    //     self.articles.push(response.data.articles[i]);
                     self.currentPage = response.data.page;
                     self.articles = response.data.articles;
                     self.totalPages = response.data.total_pages
@@ -71,8 +73,7 @@ export default {
             let full_url = config.API_URL + "/api/newsfeed";
             if(search_string !== null){
                 full_url = full_url +"?search_query=" + search_string;
-            }else if(this.currentPage !== 0 && this.currentPage !== this.totalPages){
-                this.currentPage++
+            }else if(this.currentPage !== 1 && this.currentPage <= this.totalPages){
                 full_url = full_url +"?page=" + this.currentPage;
             }
             return full_url;
@@ -84,7 +85,9 @@ export default {
                 document.body.scrollTop
             ) + window.innerHeight === document.documentElement.offsetHeight;
 
+
             if (bottomOfWindow) {
+                this.currentPage++
                 this.getNews(null);
             }
         }
