@@ -2184,7 +2184,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
   data: function data() {
     return {
       articles: [],
-      temp: [],
       header: null,
       currentPage: 1,
       totalPages: 1

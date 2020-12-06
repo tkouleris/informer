@@ -28,7 +28,6 @@ export default {
     data: function () {
         return {
             articles: [],
-            temp: [],
             header: null,
             currentPage: 1,
             totalPages:1,
@@ -82,6 +81,7 @@ export default {
                 document.documentElement.scrollTop,
                 document.body.scrollTop
             ) + window.innerHeight === document.documentElement.offsetHeight;
+
 
             if (bottomOfWindow) {
                 this.currentPage++
