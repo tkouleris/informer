@@ -2421,6 +2421,30 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         return alert('No news found with this keyword');
       });
+    },
+    getCountryCategories: function getCountryCategories(country_id) {
+      this.header = {
+        headers: {
+          Authorization: "Bearer " + localStorage.token
+        }
+      };
+      var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/settings/categories/" + country_id;
+      vue__WEBPACK_IMPORTED_MODULE_1___default.a.axios.get(full_url, this.header).then(function (response) {
+        response.data.forEach(function (category) {
+          var el_category_checkbox = $('[name=chbx_category_' + category.setting_categoryid + ']');
+          el_category_checkbox.prop('checked', false);
+
+          if (category.setting_active == 1) {
+            el_category_checkbox.prop('checked', true);
+          }
+        });
+      })["catch"](function (error) {
+        return alert('No news found with this keyword');
+      });
+    },
+    selectCountry: function selectCountry(event) {
+      var country_id = $('[name=setting_country_select]').children(":selected").attr("id");
+      this.getCountryCategories(country_id);
     }
   }
 });
@@ -60930,7 +60954,12 @@ var render = function() {
                   "select",
                   {
                     staticClass: "browser-default custom-select",
-                    attrs: { name: "setting_country_select" }
+                    attrs: { name: "setting_country_select" },
+                    on: {
+                      change: function($event) {
+                        return _vm.selectCountry($event)
+                      }
+                    }
                   },
                   _vm._l(_vm.countries, function(country) {
                     return _c("option", { attrs: { id: country.CountryID } }, [
@@ -60946,7 +60975,7 @@ var render = function() {
                       staticClass: "form-check-input",
                       attrs: {
                         type: "checkbox",
-                        name: "chbx_category_category_id",
+                        name: "chbx_category_" + category.CategoryID,
                         id: category.CategoryID
                       }
                     }),

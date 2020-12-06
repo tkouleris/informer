@@ -11,14 +11,14 @@
                     </div>
 
                     <div class="card-body">
-                        <select class="browser-default custom-select" name="setting_country_select">
+                        <select class="browser-default custom-select" name="setting_country_select" @change="selectCountry($event)">
                             <option v-for="country in countries" :id="country.CountryID">{{ country.CountryName }}</option>
                         </select>
 
                         <div v-for="category in categories" class="form-check">
                             <input type="checkbox"
                                    class="form-check-input"
-                                   name="chbx_category_category_id"
+                                   :name="'chbx_category_' + category.CategoryID"
                                    :id="category.CategoryID"
                             >
                             <label class="form-check-label"  style="color: #000000;">
@@ -112,6 +112,33 @@ export default {
                 .catch(
                     error=>alert('No news found with this keyword')
                 );
+        },
+        getCountryCategories(country_id){
+            this.header = {
+                headers: {
+                    Authorization: "Bearer " + localStorage.token
+                }
+            }
+            let full_url = config.API_URL + "/settings/categories/" + country_id;
+            Vue.axios.get(full_url, this.header)
+                .then(response =>{
+
+                    response.data.forEach(function(category){
+                        let el_category_checkbox = $('[name=chbx_category_'+category.setting_categoryid+']');
+                        el_category_checkbox.prop('checked', false);
+                        if(category.setting_active == 1)
+                        {
+                            el_category_checkbox.prop('checked', true);
+                        }
+                    });
+                })
+                .catch(
+                    error=>alert('No news found with this keyword')
+                );
+        },
+        selectCountry(event){
+            let country_id = $('[name=setting_country_select]').children(":selected").attr("id");
+            this.getCountryCategories(country_id);
         }
     }
 }
