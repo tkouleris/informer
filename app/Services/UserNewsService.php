@@ -45,10 +45,14 @@ class UserNewsService
 
         $articles = collect($this->articles_array);
         $articles = $articles->sortByDesc('publishedAt');
-
+        $this->setArticleID($articles);
         return $articles->filter(function ($article) use ($category_filter){
-            if($category_filter == null) return $article;
-            if( $category_filter == $article->category ) return $article;
+            if($category_filter == null){
+                return $article;
+            }
+            if( $category_filter == $article->category ){
+                return $article;
+            }
         });
     }
 
@@ -59,5 +63,16 @@ class UserNewsService
             $item->category = $category_short_description;
         }
         return $articles;
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $articles
+     */
+    private function setArticleID(\Illuminate\Support\Collection $articles): void
+    {
+        $article_id = 1;
+        foreach ($articles as $article) {
+            $article->id = ++$article_id;
+        }
     }
 }

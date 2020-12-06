@@ -26,6 +26,7 @@
     "dependencies": {
         "vue-axios": "^3.2.0",
         "vue-moments-ago": "^0.2.0",
-        "vue-router": "^3.4.9"
+        "vue-router": "^3.4.9",
+        "vue-scroll": "^2.1.13"
     }
 }

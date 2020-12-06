@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div v-scroll="onScroll" class="container">
         <header-component></header-component>
         <SearchComponent></SearchComponent>
-        <ArticleComponent v-for="article in articles" :article="article"></ArticleComponent>
+        <ArticleComponent v-for="article in articles" :article="article" :key="article.id"></ArticleComponent>
     </div>
 </template>
 
@@ -10,12 +10,17 @@
 import Vue from 'vue'
 import axios from 'axios'
 import config from '../config'
+import vuescroll from 'vue-scroll'
 import VueAxios from 'vue-axios'
 
-Vue.use(VueAxios,axios)
+
 import ArticleComponent from "./ArticleComponent";
 import SearchComponent from "./SearchComponent";
 import HeaderComponent from "./HeaderComponent";
+
+
+Vue.use(VueAxios,axios)
+Vue.use(vuescroll)
 export default {
     name: "NewsfeedComponent",
     components:{
@@ -30,6 +35,7 @@ export default {
         }
     },
     mounted() {
+        console.log('mounted');
         this.getNews(null);
     },
     methods:{
@@ -65,6 +71,9 @@ export default {
             }
 
             return full_url;
+        },
+        onScroll(){
+            console.log('scroll');
         }
     }
 }
