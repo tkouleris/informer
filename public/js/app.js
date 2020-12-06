@@ -2187,7 +2187,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
       temp: [],
       header: null,
       currentPage: 1,
-      totalPages: 0
+      totalPages: 1
     };
   },
   created: function created() {
@@ -2202,8 +2202,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
       this.initHeader();
       this.initArticles();
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get(this.getFullUrl(search_string), this.header).then(function (response) {
-        // for(var i = 0; i<response.data.articles.length; i++)
-        //     self.articles.push(response.data.articles[i]);
         self.currentPage = response.data.page;
         self.articles = response.data.articles;
         self.totalPages = response.data.total_pages;
@@ -60811,7 +60809,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container", on: { scroll: _vm.handleScroll } },
+    { staticClass: "container" },
     [
       _c("header-component"),
       _vm._v(" "),

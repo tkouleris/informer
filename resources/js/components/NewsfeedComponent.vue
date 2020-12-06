@@ -1,5 +1,5 @@
 <template>
-    <div class="container" @scroll="handleScroll">
+    <div class="container" >
         <header-component></header-component>
         <SearchComponent></SearchComponent>
         <ArticleComponent v-for="article in articles" :article="article" :key="article.id"></ArticleComponent>
@@ -31,7 +31,7 @@ export default {
             temp: [],
             header: null,
             currentPage: 1,
-            totalPages:0,
+            totalPages:1,
         }
     },
     created() {
@@ -47,8 +47,6 @@ export default {
             this.initArticles()
             Vue.axios.get(this.getFullUrl(search_string), this.header)
                 .then(response =>{
-                    // for(var i = 0; i<response.data.articles.length; i++)
-                    //     self.articles.push(response.data.articles[i]);
                     self.currentPage = response.data.page;
                     self.articles = response.data.articles;
                     self.totalPages = response.data.total_pages
@@ -84,7 +82,6 @@ export default {
                 document.documentElement.scrollTop,
                 document.body.scrollTop
             ) + window.innerHeight === document.documentElement.offsetHeight;
-
 
             if (bottomOfWindow) {
                 this.currentPage++
