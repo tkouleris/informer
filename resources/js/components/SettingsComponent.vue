@@ -20,6 +20,7 @@
                                    class="form-check-input"
                                    :name="'chbx_category_' + category.CategoryID"
                                    :id="category.CategoryID"
+                                   @change="set_selected_categories_for_country($event,category.CategoryID)"
                             >
                             <label class="form-check-label"  style="color: #000000;">
                                 {{ category.CategoryName }}
@@ -119,10 +120,9 @@ export default {
                     Authorization: "Bearer " + localStorage.token
                 }
             }
-            let full_url = config.API_URL + "/settings/categories/" + country_id;
+            let full_url = config.API_URL + "/api/settings/categories/" + country_id;
             Vue.axios.get(full_url, this.header)
                 .then(response =>{
-
                     response.data.forEach(function(category){
                         let el_category_checkbox = $('[name=chbx_category_'+category.setting_categoryid+']');
                         el_category_checkbox.prop('checked', false);
@@ -139,6 +139,27 @@ export default {
         selectCountry(event){
             let country_id = $('[name=setting_country_select]').children(":selected").attr("id");
             this.getCountryCategories(country_id);
+        },
+        set_selected_categories_for_country(event,category_id){
+            let country_id = $('[name=setting_country_select]').find(":selected").attr('id');;
+            this.header = {
+                headers: {
+                    Authorization: "Bearer " + localStorage.token
+                },
+            }
+            let full_url = config.API_URL + "/api/settings/categories/set";
+            let data = {
+                'country_id':country_id,
+                'category_id':category_id,
+            }
+            let self = this;
+            Vue.axios.post(full_url, data, this.header)
+                .then(response =>{
+                    self.getCountryCategories(country_id);
+                })
+                .catch(
+                    error=>alert('Error!!!')
+                );
         }
     }
 }
