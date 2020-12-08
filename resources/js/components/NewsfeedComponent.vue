@@ -51,7 +51,14 @@ export default {
                     self.totalPages = response.data.total_pages
                 })
                 .catch(
-                    error => alert('No news found with this keyword')
+                    error => {
+                        if (error.response.status === 401) {
+                            localStorage.clear();
+                            this.$router.push('/vue/');
+                            return;
+                        }
+                        alert('No news found with this keyword')
+                    }
                 );
         },
         initHeader: function (){

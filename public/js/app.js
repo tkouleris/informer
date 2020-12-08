@@ -2197,6 +2197,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
   },
   methods: {
     getNews: function getNews(search_string) {
+      var _this = this;
+
       var self = this;
       this.initHeader();
       this.initArticles();
@@ -2205,7 +2207,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
         self.articles = response.data.articles;
         self.totalPages = response.data.total_pages;
       })["catch"](function (error) {
-        return alert('No news found with this keyword');
+        if (error.response.status === 401) {
+          localStorage.clear();
+
+          _this.$router.push('/vue/');
+
+          return;
+        }
+
+        alert('No news found with this keyword');
       });
     },
     initHeader: function initHeader() {
