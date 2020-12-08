@@ -2410,7 +2410,12 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       categories: null,
-      countries: null
+      countries: null,
+      header: {
+        headers: {
+          Authorization: "Bearer " + localStorage.token
+        }
+      }
     };
   },
   mounted: function mounted() {
@@ -2420,11 +2425,6 @@ __webpack_require__.r(__webpack_exports__);
     initializePage: function initializePage() {
       var _this = this;
 
-      this.header = {
-        headers: {
-          Authorization: "Bearer " + localStorage.token
-        }
-      };
       var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/settings";
       vue__WEBPACK_IMPORTED_MODULE_1___default.a.axios.get(full_url, this.header).then(function (response) {
         _this.categories = response.data.Categories;
@@ -2434,11 +2434,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getCountryCategories: function getCountryCategories(country_id) {
-      this.header = {
-        headers: {
-          Authorization: "Bearer " + localStorage.token
-        }
-      };
       var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/settings/categories/" + country_id;
       vue__WEBPACK_IMPORTED_MODULE_1___default.a.axios.get(full_url, this.header).then(function (response) {
         response.data.forEach(function (category) {
@@ -2460,11 +2455,6 @@ __webpack_require__.r(__webpack_exports__);
     set_selected_categories_for_country: function set_selected_categories_for_country(event, category_id) {
       var country_id = $('[name=setting_country_select]').find(":selected").attr('id');
       ;
-      this.header = {
-        headers: {
-          Authorization: "Bearer " + localStorage.token
-        }
-      };
       var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/settings/categories/set";
       var data = {
         'country_id': country_id,

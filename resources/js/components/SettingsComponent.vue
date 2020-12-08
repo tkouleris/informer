@@ -90,7 +90,12 @@ export default {
     data: function () {
         return {
             categories: null,
-            countries:null
+            countries:null,
+            header:{
+                headers: {
+                    Authorization: "Bearer " + localStorage.token
+                },
+            }
         }
     },
     mounted() {
@@ -99,11 +104,6 @@ export default {
     methods:{
         initializePage: function ()
         {
-            this.header = {
-                headers: {
-                    Authorization: "Bearer " + localStorage.token
-                }
-            }
             let full_url = config.API_URL + "/api/settings";
             Vue.axios.get(full_url, this.header)
                 .then(response =>{
@@ -115,11 +115,6 @@ export default {
                 );
         },
         getCountryCategories(country_id){
-            this.header = {
-                headers: {
-                    Authorization: "Bearer " + localStorage.token
-                }
-            }
             let full_url = config.API_URL + "/api/settings/categories/" + country_id;
             Vue.axios.get(full_url, this.header)
                 .then(response =>{
@@ -142,11 +137,6 @@ export default {
         },
         set_selected_categories_for_country(event,category_id){
             let country_id = $('[name=setting_country_select]').find(":selected").attr('id');;
-            this.header = {
-                headers: {
-                    Authorization: "Bearer " + localStorage.token
-                },
-            }
             let full_url = config.API_URL + "/api/settings/categories/set";
             let data = {
                 'country_id':country_id,
@@ -156,8 +146,7 @@ export default {
             Vue.axios.post(full_url, data, this.header)
                 .then(response =>{
                     self.getCountryCategories(country_id);
-                })
-                .catch(
+                }).catch(
                     error=>alert('Error!!!')
                 );
         }
