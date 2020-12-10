@@ -2317,12 +2317,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config */ "./resources/js/config.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_2__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2417,6 +2411,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       categories: null,
       countries: null,
+      selectedFile: null,
       header: {
         headers: {
           Authorization: "Bearer " + localStorage.token
@@ -2473,28 +2468,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return alert('Error!!!');
       });
     },
+    selectFile: function selectFile(event) {
+      this.selectedFile = event.target.files[0];
+    },
     uploadAvatar: function uploadAvatar() {
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-      var FormData = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'form-data'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-      var fs = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'fs'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-      var data = new FormData();
-      data.append('image', fs.createReadStream('/MyFiles/Downloads/tmp/fyllo_agona_gallis_premiera.jpg'));
-      var config = {
-        method: 'post',
-        url: 'http://localhost/api/avatar/upload',
-        headers: _objectSpread({
-          'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2FwaVwvbG9naW4iLCJpYXQiOjE2MDc1NzI5NzYsImV4cCI6MTYwNzU3NjU3NiwibmJmIjoxNjA3NTcyOTc2LCJqdGkiOiIxdk1aa25rNnExVkgyQ0ZoIiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.Q3d2YpWrfbmXXwBF52le3EP21PpIaGaRxbIzcEbo-ss',
-          'Cookie': 'JSESSIONID=35405D33B49EECA4BFE709DFCFF2215D'
-        }, data.getHeaders()),
-        data: data
-      };
-      axios(config).then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })["catch"](function (error) {
-        console.log(error);
+      var fd = new FormData();
+      fd.append('image', this.selectedFile, this.selectedFile.name);
+      var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/avatar/upload";
+      axios.post(full_url, fd, this.header).then(function (response) {
+        console.log(response);
       });
     }
   }
@@ -61063,7 +61045,17 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
-                _vm._m(2),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "file",
+                      id: "avatarToUpload",
+                      name: "image"
+                    },
+                    on: { change: _vm.selectFile }
+                  })
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c(
@@ -61078,9 +61070,9 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3),
+            _vm._m(2),
             _vm._v(" "),
-            _vm._m(4)
+            _vm._m(3)
           ])
         ])
       ])
@@ -61103,17 +61095,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h2", { staticStyle: { color: "#000000" } }, [_vm._v("Avatar")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "file", id: "avatarToUpload", name: "image" }
-      })
     ])
   },
   function() {
