@@ -31,16 +31,16 @@
                         <h2 style="color: #000000;">Avatar</h2>
                     </div>
                     <div class="card-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
+<!--                        <form  enctype="multipart/form-data">-->
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="file" name="image" class="form-control">
+                                    <input type="file" id="avatarToUpload" name="image" class="form-control">
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-success">Upload</button>
+                                    <button @click="uploadAvatar"  class="btn btn-success">Upload</button>
                                 </div>
                             </div>
-                        </form>
+<!--                        </form>-->
                     </div>
                     <div class="card-header">
                         <h2 style="color: #000000;">Change Password</h2>
@@ -149,6 +149,32 @@ export default {
                 }).catch(
                     error=>alert('Error!!!')
                 );
+        },
+        uploadAvatar(){
+            var axios = require('axios');
+            var FormData = require('form-data');
+            var fs = require('fs');
+            var data = new FormData();
+            data.append('image', fs.createReadStream('/MyFiles/Downloads/tmp/fyllo_agona_gallis_premiera.jpg'));
+
+            var config = {
+                method: 'post',
+                url: 'http://localhost/api/avatar/upload',
+                headers: {
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2FwaVwvbG9naW4iLCJpYXQiOjE2MDc1NzI5NzYsImV4cCI6MTYwNzU3NjU3NiwibmJmIjoxNjA3NTcyOTc2LCJqdGkiOiIxdk1aa25rNnExVkgyQ0ZoIiwic3ViIjoxLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.Q3d2YpWrfbmXXwBF52le3EP21PpIaGaRxbIzcEbo-ss',
+                    'Cookie': 'JSESSIONID=35405D33B49EECA4BFE709DFCFF2215D',
+                    ...data.getHeaders()
+                },
+                data : data
+            };
+
+            axios(config)
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     }
 }
