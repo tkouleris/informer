@@ -2395,10 +2395,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -2477,6 +2473,24 @@ __webpack_require__.r(__webpack_exports__);
       var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/avatar/upload";
       axios.post(full_url, fd, this.header).then(function (response) {
         console.log(response);
+      });
+    },
+    updatePassword: function updatePassword() {
+      if (!$('#password_notification').hasClass('d-none')) {
+        $('#password_notification').addClass('d-none');
+      }
+
+      var new_password = $('[name=new_password]').val();
+      var password_confirm = $('[name=password_confirm]').val();
+      var data = {
+        'new_password': new_password,
+        'password_confirm': password_confirm
+      };
+      var full_url = _config__WEBPACK_IMPORTED_MODULE_2___default.a.API_URL + "/api/settings/update-password";
+      axios.post(full_url, data, this.header).then(function (response) {
+        alert('Password Changed!');
+      })["catch"](function (response) {
+        $('#password_notification').removeClass('d-none');
       });
     }
   }
@@ -61029,9 +61043,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                                " +
+                          "\n                            " +
                             _vm._s(category.CategoryName) +
-                            "\n                            "
+                            "\n                        "
                         )
                       ]
                     )
@@ -61072,7 +61086,41 @@ var render = function() {
             _vm._v(" "),
             _vm._m(2),
             _vm._v(" "),
-            _vm._m(3)
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "alert alert-danger d-none",
+                  attrs: { id: "password_notification", role: "alert" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Passwords not match!\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row mb-0" }, [
+                _c("div", { staticClass: "col-md-6 offset-md-4" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: { click: _vm.updatePassword }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Update Password\n                            "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
           ])
         ])
       ])
@@ -61111,80 +61159,56 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("form", { attrs: { method: "POST", action: "" } }, [
-        _c(
-          "div",
-          { staticClass: "alert alert-danger", attrs: { role: "alert" } },
-          [
-            _vm._v(
-              "\n                                Passwords not match!\n                            "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group row" }, [
-          _c(
-            "label",
-            {
-              staticClass: "col-md-2 col-form-label text-md-right",
-              staticStyle: { color: "black" },
-              attrs: { for: "new_password" }
-            },
-            [_vm._v("Password")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                id: "new_password",
-                type: "password",
-                name: "new_password",
-                required: ""
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group row" }, [
-          _c(
-            "label",
-            {
-              staticClass: "col-md-2 col-form-label text-md-right",
-              staticStyle: { color: "black" },
-              attrs: { for: "password_confirm" }
-            },
-            [_vm._v("Confirm")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("input", {
-              staticClass:
-                "form-control @error('confirm_password') is-invalid @enderror",
-              attrs: {
-                id: "password_confirm",
-                type: "password",
-                name: "password_confirm",
-                required: ""
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group row mb-0" }, [
-          _c("div", { staticClass: "col-md-6 offset-md-4" }, [
-            _c(
-              "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-              [
-                _vm._v(
-                  "\n                                        Update Password\n                                    "
-                )
-              ]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-2 col-form-label text-md-right",
+          staticStyle: { color: "black" },
+          attrs: { for: "new_password" }
+        },
+        [_vm._v("Password")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            id: "new_password",
+            type: "password",
+            name: "new_password",
+            required: ""
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-2 col-form-label text-md-right",
+          staticStyle: { color: "black" },
+          attrs: { for: "password_confirm" }
+        },
+        [_vm._v("Confirm")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("input", {
+          staticClass:
+            "form-control @error('confirm_password') is-invalid @enderror",
+          attrs: {
+            id: "password_confirm",
+            type: "password",
+            name: "password_confirm",
+            required: ""
+          }
+        })
       ])
     ])
   }

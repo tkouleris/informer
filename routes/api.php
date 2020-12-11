@@ -29,4 +29,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     // upload user avatar
     Route::post('/avatar/upload','ApiControllers\ImageController@ImageUpload');
 
+    // update password
+    Route::post('/settings/update-password','ApiControllers\UpdatePasswordController@update');
+
 });

@@ -31,47 +31,43 @@
                         <h2 style="color: #000000;">Avatar</h2>
                     </div>
                     <div class="card-body">
-<!--                        <form  enctype="multipart/form-data">-->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="file" id="avatarToUpload" name="image" class="form-control" @change="selectFile">
-                                </div>
-                                <div class="col-md-6">
-                                    <button @click="uploadAvatar"  class="btn btn-success">Upload</button>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="file" id="avatarToUpload" name="image" class="form-control" @change="selectFile">
                             </div>
-<!--                        </form>-->
+                            <div class="col-md-6">
+                                <button @click="uploadAvatar"  class="btn btn-success">Upload</button>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card-header">
                         <h2 style="color: #000000;">Change Password</h2>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="">
+                        <div class="alert alert-danger d-none" id="password_notification" role="alert">
+                            Passwords not match!
+                        </div>
 
-                            <div class="alert alert-danger" role="alert">
-                                Passwords not match!
+                        <div class="form-group row">
+                            <label for="new_password" class="col-md-2 col-form-label text-md-right" style="color:black;">Password</label>
+                            <div class="col-md-6">
+                                <input id="new_password" type="password" class="form-control" name="new_password" required>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="new_password" class="col-md-2 col-form-label text-md-right" style="color:black;">Password</label>
-                                <div class="col-md-6">
-                                    <input id="new_password" type="password" class="form-control" name="new_password" required>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password_confirm" class="col-md-2 col-form-label text-md-right" style="color:black;">Confirm</label>
+                            <div class="col-md-6">
+                                <input id="password_confirm" type="password" class="form-control @error('confirm_password') is-invalid @enderror" name="password_confirm" required>
                             </div>
-                            <div class="form-group row">
-                                <label for="password_confirm" class="col-md-2 col-form-label text-md-right" style="color:black;">Confirm</label>
-                                <div class="col-md-6">
-                                    <input id="password_confirm" type="password" class="form-control @error('confirm_password') is-invalid @enderror" name="password_confirm" required>
-                                </div>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button @click="updatePassword" class="btn btn-primary">
+                                    Update Password
+                                </button>
                             </div>
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Update Password
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,8 +158,28 @@ export default {
             .then(response=>{
                 console.log(response)
             })
+        },
+        updatePassword(){
+            if(!$('#password_notification').hasClass('d-none')){
+                $('#password_notification').addClass('d-none')
+            }
+            let new_password = $('[name=new_password]').val();
+            let password_confirm = $('[name=password_confirm]').val();
+
+            let data = {
+                'new_password': new_password,
+                'password_confirm':password_confirm
+            }
+            let full_url = config.API_URL + "/api/settings/update-password";
+            axios.post(full_url,data,this.header)
+                .then(response=>{
+                   alert('Password Changed!');
+                }).catch( response=>{
+                    $('#password_notification').removeClass('d-none');
+                });
         }
-    }
+    },
+
 }
 </script>
 
