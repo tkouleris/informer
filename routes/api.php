@@ -16,7 +16,8 @@ use Illuminate\Http\Request;
 Route::post('/login','ApiControllers\AuthController@login');
 
 
-Route::group(['middleware' => ['jwt.auth']], function() {
+Route::group(['middleware' => ['jwtauth']], function() {
+//Route::group(['middleware' => ['jwt.auth']], function() {
 
     // newsfeed
     Route::get('/newsfeed','ApiControllers\NewsfeedController@feed');
