@@ -2102,6 +2102,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2132,6 +2134,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
       })["catch"](function (error) {
         return alert('Wrong Username or Password');
       });
+    },
+    loginAtEnterPressed: function loginAtEnterPressed(event) {
+      if (event.keyCode !== 13) {
+        return;
+      }
+
+      this.login_attempt();
     }
   }
 });
@@ -6957,7 +6966,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nbody[data-v-4d2414bf]\n{\n    margin: 0;\n    padding: 0;\n    background-color:#6abadeba;\n    font-family: 'Arial',serif;\n}\n.login[data-v-4d2414bf]{\n    width: 500px;\n    overflow: hidden;\n    margin: auto;\n    /*margin: 20px 0px 0px 450px;*/\n    padding: 80px;\n    background: #23463f;\n    border-radius: 15px ;\n}\nh2[data-v-4d2414bf]{\n    text-align: center;\n    color: #277582;\n    padding: 20px;\n}\nlabel[data-v-4d2414bf]{\n    color: #08ffd1;\n    font-size: 17px;\n}\n#Uname[data-v-4d2414bf]{\n    width: 300px;\n    height: 30px;\n    border: none;\n    border-radius: 3px;\n    padding-left: 8px;\n}\n#Pass[data-v-4d2414bf]{\n    width: 300px;\n    height: 30px;\n    border: none;\n    border-radius: 3px;\n    padding-left: 8px;\n}\n#log[data-v-4d2414bf]{\n    width: 300px;\n    height: 30px;\n    border: none;\n    border-radius: 17px;\n    padding-left: 7px;\n    color: blue;\n}\nspan[data-v-4d2414bf]{\n    color: white;\n    font-size: 17px;\n}\na[data-v-4d2414bf]{\n    float: right;\n    background-color: grey;\n}\n", ""]);
+exports.push([module.i, "\nbody[data-v-4d2414bf]\n{\n    margin: 0;\n    padding: 0;\n    background-color:#6abadeba;\n    font-family: 'Arial',serif;\n}\n.login[data-v-4d2414bf]{\n    width: 500px;\n    overflow: hidden;\n    margin: auto;\n    margin-top: 15px;\n    padding: 80px;\n    background: #808080;\n    border-radius: 15px ;\n}\nh2[data-v-4d2414bf]{\n    text-align: center;\n    color: #277582;\n    padding: 20px;\n}\nlabel[data-v-4d2414bf]{\n    color: black;\n    font-size: 17px;\n}\n#Uname[data-v-4d2414bf]{\n    width: 300px;\n    height: 30px;\n    border: none;\n    border-radius: 3px;\n    padding-left: 8px;\n}\n#Pass[data-v-4d2414bf]{\n    width: 300px;\n    height: 30px;\n    border: none;\n    border-radius: 3px;\n    padding-left: 8px;\n}\n#log[data-v-4d2414bf]{\n    width: 300px;\n    height: 30px;\n    border: none;\n    border-radius: 17px;\n    padding-left: 7px;\n    color: black;\n}\nspan[data-v-4d2414bf]{\n    color: white;\n    font-size: 17px;\n}\na[data-v-4d2414bf]{\n    float: right;\n    color: blue;\n}\n", ""]);
 
 // exports
 
@@ -60785,6 +60794,9 @@ var render = function() {
         },
         domProps: { value: _vm.email },
         on: {
+          keypress: function($event) {
+            return _vm.loginAtEnterPressed($event)
+          },
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -60816,6 +60828,9 @@ var render = function() {
         },
         domProps: { value: _vm.password },
         on: {
+          keypress: function($event) {
+            return _vm.loginAtEnterPressed($event)
+          },
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -60838,7 +60853,11 @@ var render = function() {
       _vm._v(" "),
       _c("input", { attrs: { type: "checkbox", id: "check" } }),
       _vm._v(" "),
-      _c("span", [_vm._v("Remember me")])
+      _c("span", [_vm._v("Remember me")]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("a", { attrs: { href: "register" } }, [_vm._v("create account")])
     ])
   ])
 }

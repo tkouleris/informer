@@ -5,17 +5,19 @@
             <label><b>Email
             </b>
             </label>
-            <input v-model="email" type="text" name="Uname" id="Uname" placeholder="Username">
+            <input v-model="email" @keypress="loginAtEnterPressed($event)" type="text" name="Uname" id="Uname" placeholder="Username">
             <br><br>
             <label><b>Password
             </b>
             </label>
-            <input v-model="password" type="Password" name="Pass" id="Pass" placeholder="Password">
+            <input v-model="password" @keypress="loginAtEnterPressed($event)" type="Password" name="Pass" id="Pass" placeholder="Password">
             <br><br>
             <input @click="login_attempt" type="button" name="log" id="log" value="Log In Here">
             <br><br>
             <input type="checkbox" id="check">
             <span>Remember me</span>
+            <br>
+            <a href="register">create account</a>
         </form>
     </div>
 </template>
@@ -55,6 +57,12 @@ export default {
                 ).catch(
                     error=>alert('Wrong Username or Password')
                 );
+        },
+        loginAtEnterPressed(event){
+            if(event.keyCode !== 13){
+                return;
+            }
+            this.login_attempt();
         }
     }
 }
@@ -72,9 +80,9 @@ body
     width: 500px;
     overflow: hidden;
     margin: auto;
-    /*margin: 20px 0px 0px 450px;*/
+    margin-top: 15px;
     padding: 80px;
-    background: #23463f;
+    background: #808080;
     border-radius: 15px ;
 
 }
@@ -84,7 +92,7 @@ h2{
     padding: 20px;
 }
 label{
-    color: #08ffd1;
+    color: black;
     font-size: 17px;
 }
 #Uname{
@@ -108,7 +116,7 @@ label{
     border: none;
     border-radius: 17px;
     padding-left: 7px;
-    color: blue;
+    color: black;
 }
 span{
     color: white;
@@ -116,6 +124,6 @@ span{
 }
 a{
     float: right;
-    background-color: grey;
+    color: blue;
 }
 </style>
