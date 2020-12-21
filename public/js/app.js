@@ -2164,9 +2164,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _ArticleComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ArticleComponent */ "./resources/js/components/ArticleComponent.vue");
-/* harmony import */ var _SearchComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchComponent */ "./resources/js/components/SearchComponent.vue");
-/* harmony import */ var _HeaderComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./HeaderComponent */ "./resources/js/components/HeaderComponent.vue");
+/* harmony import */ var _mixins_refreshToken__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../mixins/refreshToken */ "./resources/js/mixins/refreshToken.js");
+/* harmony import */ var _ArticleComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ArticleComponent */ "./resources/js/components/ArticleComponent.vue");
+/* harmony import */ var _SearchComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchComponent */ "./resources/js/components/SearchComponent.vue");
+/* harmony import */ var _HeaderComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./HeaderComponent */ "./resources/js/components/HeaderComponent.vue");
 //
 //
 //
@@ -2175,6 +2176,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2186,9 +2188,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewsfeedComponent",
   components: {
-    HeaderComponent: _HeaderComponent__WEBPACK_IMPORTED_MODULE_6__["default"],
-    ArticleComponent: _ArticleComponent__WEBPACK_IMPORTED_MODULE_4__["default"],
-    SearchComponent: _SearchComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
+    HeaderComponent: _HeaderComponent__WEBPACK_IMPORTED_MODULE_7__["default"],
+    ArticleComponent: _ArticleComponent__WEBPACK_IMPORTED_MODULE_5__["default"],
+    SearchComponent: _SearchComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   data: function data() {
     return {
@@ -2212,6 +2214,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
       this.initHeader();
       this.initArticles();
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get(this.getFullUrl(search_string), this.header).then(function (response) {
+        // self.refreshToken(response,self.getNews(search_string));
+        if (response.data.success === false && response.data.status == 'expired') {
+          localStorage.token = response.data.token;
+          self.getNews(search_string);
+          return;
+        }
+
         self.currentPage = response.data.page;
         self.articles = response.data.articles;
         self.totalPages = response.data.total_pages;
@@ -2256,7 +2265,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
         this.getNews(null);
       }
     }
-  }
+  },
+  mixins: [_mixins_refreshToken__WEBPACK_IMPORTED_MODULE_4__["default"]]
 });
 
 /***/ }),
@@ -77218,6 +77228,33 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   API_URL: 'http://localhost'
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/refreshToken.js":
+/*!*********************************************!*\
+  !*** ./resources/js/mixins/refreshToken.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    refreshToken: function refreshToken(response, callback) {
+      console.log(response.data.success === false && response.data.status == 'expired');
+
+      if (response.data.success === false && response.data.status == 'expired') {
+        localStorage.token = response.data.token;
+        callback();
+        return;
+      }
+
+      return;
+    }
+  }
 });
 
 /***/ }),

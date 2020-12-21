@@ -11,7 +11,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import config from '../config'
 import VueAxios from 'vue-axios'
-
+import refreshToken from '../mixins/refreshToken'
 import ArticleComponent from "./ArticleComponent";
 import SearchComponent from "./SearchComponent";
 import HeaderComponent from "./HeaderComponent";
@@ -46,6 +46,12 @@ export default {
             this.initArticles()
             Vue.axios.get(this.getFullUrl(search_string), this.header)
                 .then(response =>{
+                    // self.refreshToken(response,self.getNews(search_string));
+                    if(response.data.success === false && response.data.status == 'expired'){
+                        localStorage.token = response.data.token;
+                        self.getNews(search_string);
+                        return;
+                    }
                     self.currentPage = response.data.page;
                     self.articles = response.data.articles;
                     self.totalPages = response.data.total_pages
@@ -95,7 +101,10 @@ export default {
                 this.getNews(null);
             }
         }
-    }
+    },
+    mixins:[
+        refreshToken
+    ]
 }
 </script>
 
