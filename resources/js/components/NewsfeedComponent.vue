@@ -81,7 +81,6 @@ export default {
         getFullUrl(search_string)
         {
             let full_url = config.API_URL + "/api/newsfeed";
-            console.log(full_url);
             if(search_string !== null){
                 full_url = full_url +"?search_query=" + search_string;
             }else if(this.currentPage !== 1 && this.currentPage <= this.totalPages){
