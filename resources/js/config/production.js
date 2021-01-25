@@ -1,3 +1,3 @@
 export default {
-    API_URL: 'http://informer.tkouleris.eu/'
+    API_URL: 'http://informer.tkouleris.eu'
 }
