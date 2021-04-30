@@ -46,14 +46,17 @@ class UserNewsService
         $articles = collect($this->articles_array);
         $articles = $articles->sortByDesc('publishedAt');
         $this->setArticleID($articles);
-        return $articles->filter(function ($article) use ($category_filter){
+        $final_articles = [];
+        foreach ($articles as $article){
             if($category_filter == null){
-                return $article;
+                $final_articles[] = $article;
             }
             if( $category_filter == $article->category ){
-                return $article;
+                $final_articles[] = $article;
             }
-        });
+        }
+
+        return collect($final_articles);
     }
 
 
