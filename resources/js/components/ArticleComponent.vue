@@ -42,7 +42,7 @@ export default {
     },
     methods:{
       imageLoadError: function (){
-        return window.location.origin + '/images/misc/noimage.png'
+        return window.location.origin + '/img/noimage.png'
       }
     }
 
