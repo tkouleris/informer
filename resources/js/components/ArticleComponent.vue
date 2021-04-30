@@ -32,20 +32,18 @@ export default {
     props:['article'],
     data: function () {
         return {
-            url: '',
-            img: '',
-            date: ''
+            url: this.article.url,
+            img: (this.article.urlToImage === null || this.article.urlToImage === undefined)?this.imageLoadError():this.article.urlToImage,
+            date: this.article.publishedAt
         }
     },
     mounted() {
-        this.initialize();
+
     },
     methods:{
-        initialize: function (){
-            this.url = this.article.url
-            this.img = this.article.urlToImage;
-            this.date = this.article.publishedAt
-        }
+      imageLoadError: function (){
+        return window.location.origin + '/images/misc/noimage.png'
+      }
     }
 
 }

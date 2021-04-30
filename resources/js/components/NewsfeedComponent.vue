@@ -43,7 +43,7 @@ export default {
         getNews:function (search_string) {
             let self = this;
             this.initHeader();
-            this.initArticles()
+            // this.initArticles()
             Vue.axios.get(this.getFullUrl(search_string), this.header)
                 .then(response =>{
                     // self.refreshToken(response,self.getNews(search_string));
@@ -52,12 +52,24 @@ export default {
                         self.getNews(search_string);
                         return;
                     }
-                    self.currentPage = response.data.page;
-                    self.articles = response.data.articles;
                     self.totalPages = response.data.total_pages
+                    self.currentPage = response.data.page;
+                    if(self.articles.length < (parseInt(response.data.total_pages) * 5)) {
+                        if(response.data.articles[(parseInt(response.data.page) * 5) - 5])
+                            self.articles.push(response.data.articles[(parseInt(response.data.page) * 5) - 5]);
+                        if(response.data.articles[(parseInt(response.data.page) * 5) - 4])
+                            self.articles.push(response.data.articles[(parseInt(response.data.page) * 5) - 4]);
+                        if(response.data.articles[(parseInt(response.data.page) * 5) - 3])
+                            self.articles.push(response.data.articles[(parseInt(response.data.page) * 5) - 3]);
+                        if(response.data.articles[(parseInt(response.data.page) * 5) - 2])
+                            self.articles.push(response.data.articles[(parseInt(response.data.page) * 5) - 2]);
+                        if(response.data.articles[(parseInt(response.data.page) * 5) - 1])
+                            self.articles.push(response.data.articles[(parseInt(response.data.page) * 5) - 1]);
+                    }
                 })
                 .catch(
                     error => {
+                        console.log(error)
                         if (error.response.status === 401) {
                             localStorage.clear();
                             this.$router.push('/vue/');
@@ -83,7 +95,7 @@ export default {
             let full_url = config.API_URL + "/api/newsfeed";
             if(search_string !== null){
                 full_url = full_url +"?search_query=" + search_string;
-            }else if(this.currentPage !== 1 && this.currentPage <= this.totalPages){
+            }else if(/*this.currentPage !== 1 && */this.currentPage <= this.totalPages){
                 full_url = full_url +"?page=" + this.currentPage;
             }
             return full_url;
